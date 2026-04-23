@@ -1,0 +1,5 @@
+.env
+.git
+uploads/
+node_modules
+logs/
