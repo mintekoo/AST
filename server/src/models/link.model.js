@@ -28,6 +28,9 @@ const Link = sequelize.define(
     url: {
       type: DataTypes.STRING(500),
       allowNull: false,
+      validate: {
+        isUrl: true,
+      },
     },
   },
   {

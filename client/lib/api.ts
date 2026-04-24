@@ -5,7 +5,6 @@ import type {
   Meta,
   Product,
   Booking,
-  // CreateBookingInput,
   Testimonial,
   Blog,
   Category,
@@ -13,13 +12,21 @@ import type {
   Service,
   Partner,
   Gallery,
+  ApiListResponse,
+  Certification,
+  Project,
+  Term,
+  FAQ,
+  Social,
+  AppLocation,
+  ContactPayload,
 } from "./types";
 
 type FetchOptions = RequestInit & { next?: { revalidate?: number } };
 
 async function request<T>(
   path: string,
-  options: FetchOptions = {}
+  options: FetchOptions = {},
 ): Promise<T> {
   if (!API_BASE_URL) throw new Error("API base URL is not configured");
   const url = `${API_BASE_URL}${path}`;
@@ -38,7 +45,7 @@ async function request<T>(
 }
 
 export function buildQuery(
-  params: Record<string, string | number | undefined>
+  params: Record<string, string | number | undefined>,
 ) {
   const sp = new URLSearchParams();
   Object.entries(params).forEach(([k, v]) => {
@@ -50,7 +57,7 @@ export function buildQuery(
 
 // Products
 export async function fetchProducts(
-  query: { page?: number; categoryId?: string; perPage?: number } = {}
+  query: { page?: number; categoryId?: string; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -68,7 +75,7 @@ export async function fetchProduct(id: string) {
 
 // Bookings
 export async function fetchBookings(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -83,114 +90,97 @@ export async function fetchBooking(id: string) {
   return request<Booking>(`/api/bookings/${id}`, { next: { revalidate: 60 } });
 }
 
-// export async function createBooking(data: CreateBookingInput) {
-//   return request<{
-//     message: string;
-//     booking: Booking;
-//   }>("/api/bookings", {
-//     method: "POST",
-//     body: JSON.stringify(data),
-//   });
-// }
-
-// Testimonials
-export async function fetchTestimonials(
-  query: { page?: number; perPage?: number } = {}
-) {
-  const q = buildQuery({
-    page: query.page,
-    perPage: query.perPage,
-  });
-  return request<{ testimonials: Testimonial[]; meta: Meta }>(
-    `/api/testimonials${q}`,
-    { next: { revalidate: 120 } }
-  );
-}
-
-export async function fetchTestimonial(id: string) {
-  return request<Testimonial>(`/api/testimonials/${id}`, {
-    next: { revalidate: 120 },
-  });
-}
-
 // Blogs
 export async function fetchBlogs(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
     perPage: query.perPage,
   });
-  return request<{ blogs: Blog[]; meta: Meta }>(`/api/blogs${q}`, {
+
+  return request<{
+    success: boolean;
+    data: Blog[];
+    meta: Meta;
+  }>(`/api/blogs${q}`, {
     next: { revalidate: 120 },
   });
 }
 
 export async function fetchBlog(id: string) {
-  return request<Blog>(`/api/blogs/${id}`, { next: { revalidate: 120 } });
-}
-
-// Categories
-export async function fetchCategories() {
-  return request<{ categories: Category[]; meta: Meta }>(`/api/categories`, {
-    next: { revalidate: 300 },
+  return request<{
+    success: boolean;
+    data: Blog;
+  }>(`/api/blogs/${id}`, {
+    next: { revalidate: 120 },
   });
-}
-
-// products by category ID
-export async function fetchProductsByCategory(
-  categoryId: string | number,
-  query: { page?: number; perPage?: number } = {}
-) {
-  const id = categoryId.toString();
-  const q = buildQuery({
-    page: query.page,
-    perPage: query.perPage,
-  });
-  return request<{ products: Product[]; meta: Meta }>(
-    `/api/products/category/${id}${q}`,
-    {
-      next: { revalidate: 60 },
-    }
-  );
 }
 
 // About
 export async function fetchAbouts(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
     perPage: query.perPage,
   });
-  return request<{ abouts: About[]; meta: Meta }>(`/api/about${q}`, {
+
+  return request<{
+    success: boolean;
+    data: About[];
+    meta: Meta;
+  }>(`/api/abouts${q}`, {
     next: { revalidate: 300 },
   });
 }
 
 export async function fetchAbout(id: string | number) {
-  return request<About>(`/api/about/${id}`, { next: { revalidate: 300 } });
-}
-
-// Services
-export async function fetchServices(
-  query: { page?: number; perPage?: number } = {}
-) {
-  const q = buildQuery({
-    page: query.page,
-    perPage: query.perPage,
-  });
-  return request<{ services: Service[]; meta: Meta }>(`/api/services${q}`, {
+  return request<{
+    success: boolean;
+    data: About;
+  }>(`/api/about/${id}`, {
     next: { revalidate: 300 },
   });
 }
 
-export async function fetchService(id: string | number) {
-  return request<Service>(`/api/services/${id}`, { next: { revalidate: 300 } });
+export async function fetchCertifications(
+  query: { page?: number; perPage?: number } = {},
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: Certification[];
+    meta: Meta;
+  }>(`/api/certifications${q}`, {
+    next: { revalidate: 300 },
+  });
 }
 
-// Partners
-export async function fetchPartners(
+export async function createContact(data: ContactPayload) {
+  return request<{
+    success: boolean;
+    message: string;
+  }>(`/api/contacts`, {
+    method: "POST",
+    body: JSON.stringify(data),
+  });
+}
+
+export async function fetchCertification(id: string | number) {
+  return request<{
+    success: boolean;
+    data: Certification;
+  }>(`/api/certifications/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchFAQs(
   query: { page?: number; perPage?: number } = {}
 ) {
   const q = buildQuery({
@@ -198,24 +188,27 @@ export async function fetchPartners(
     perPage: query.perPage,
   });
 
-  const res = await request<{ data: Partner[]; meta: Meta }>(
-    `/api/partners${q}`,
-    { next: { revalidate: 120 } }
-  );
-
-  return {
-    data: res.data,
-    meta: res.meta,
-  };
+  return request<{
+    success: boolean;
+    data: FAQ[];
+    meta: Meta;
+  }>(`/api/faqs${q}`, {
+    next: { revalidate: 300 },
+  });
 }
 
-export async function fetchPartner(id: string | number) {
-  return request<Partner>(`/api/partners/${id}`, { next: { revalidate: 120 } });
+export async function fetchFAQ(id: string | number) {
+  return request<{
+    success: boolean;
+    data: FAQ;
+  }>(`/api/faqs/${id}`, {
+    next: { revalidate: 300 },
+  });
 }
 
 // Fetch paginated galleries
 export async function fetchGalleries(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -234,7 +227,210 @@ export async function fetchGallery(id: number | string): Promise<Gallery> {
     `/api/galleries/${id}`,
     {
       next: { revalidate: 120 },
-    }
+    },
   );
   return res.data;
+}
+
+export async function fetchLocations(
+  query: { page?: number; perPage?: number } = {}
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: AppLocation[];
+    meta: Meta;
+  }>(`/api/locations${q}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchLocation(id: string | number) {
+  return request<{
+    success: boolean;
+    data: AppLocation;
+  }>(`/api/locations/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+// Services
+export async function fetchServices(
+  query: { page?: number; perPage?: number } = {},
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: Service[];
+    meta: Meta;
+  }>(`/api/services${q}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchService(id: string | number) {
+  return request<{
+    success: boolean;
+    data: Service;
+  }>(`/api/services/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchSocials(
+  query: { page?: number; perPage?: number } = {}
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: Social[];
+    meta: Meta;
+  }>(`/api/socials${q}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchSocial(id: string | number) {
+  return request<{
+    success: boolean;
+    data: Social;
+  }>(`/api/socials/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+// Testimonials
+export async function fetchTestimonials(
+  query: { page?: number; perPage?: number } = {},
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<ApiListResponse<Testimonial>>(`/api/testimonials${q}`, {
+    next: { revalidate: 120 },
+  });
+}
+
+export async function fetchTestimonial(id: string) {
+  return request<{ success: boolean; data: Testimonial }>(
+    `/api/testimonials/${id}`,
+    {
+      next: { revalidate: 120 },
+    },
+  );
+}
+
+export async function fetchTerms(
+  query: { page?: number; perPage?: number } = {}
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: Term[];
+    meta: Meta;
+  }>(`/api/terms${q}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchTerm(id: string | number) {
+  return request<{
+    success: boolean;
+    data: Term;
+  }>(`/api/terms/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+// Partners
+export async function fetchPartners(
+  query: { page?: number; perPage?: number } = {},
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  const res = await request<{ data: Partner[]; meta: Meta }>(
+    `/api/partners${q}`,
+    { next: { revalidate: 120 } },
+  );
+
+  return {
+    data: res.data,
+    meta: res.meta,
+  };
+}
+
+export async function fetchPartner(id: string | number) {
+  return request<Partner>(`/api/partners/${id}`, { next: { revalidate: 120 } });
+}
+
+export async function fetchProjects(
+  query: { page?: number; perPage?: number } = {},
+) {
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+
+  return request<{
+    success: boolean;
+    data: Project[];
+    meta: Meta;
+  }>(`/api/projects${q}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+export async function fetchProject(id: string | number) {
+  return request<{
+    success: boolean;
+    data: Project;
+  }>(`/api/projects/${id}`, {
+    next: { revalidate: 300 },
+  });
+}
+
+// Categories
+export async function fetchCategories() {
+  return request<{ categories: Category[]; meta: Meta }>(`/api/categories`, {
+    next: { revalidate: 300 },
+  });
+}
+
+// products by category ID
+export async function fetchProductsByCategory(
+  categoryId: string | number,
+  query: { page?: number; perPage?: number } = {},
+) {
+  const id = categoryId.toString();
+  const q = buildQuery({
+    page: query.page,
+    perPage: query.perPage,
+  });
+  return request<{ products: Product[]; meta: Meta }>(
+    `/api/products/category/${id}${q}`,
+    {
+      next: { revalidate: 60 },
+    },
+  );
 }

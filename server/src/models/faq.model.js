@@ -20,7 +20,7 @@ const FAQ = sequelize.define(
     },
   },
   {
-    tableName: 'fAQs',
+    tableName: 'faqs',
     timestamps: true,
   }
 );

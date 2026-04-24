@@ -3,13 +3,13 @@
 import { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
-import type { Product } from "@/lib/types";
+import type { Project } from "@/lib/types";
 import HeroProductsCarousel from "./HeroProductsCarousel";
 
 gsap.registerPlugin(ScrollTrigger);
 
 interface HeroClientProps {
-    featuredProducts: Product[];
+    featuredProducts: Project[];
 }
 
 export default function HeroClient({ featuredProducts }: HeroClientProps) {
@@ -78,7 +78,7 @@ export default function HeroClient({ featuredProducts }: HeroClientProps) {
         const hero = heroRef.current;
         if (!hero) return;
 
-        
+
         gsap.to(textRef.current, {
             yPercent: 25,
             scrollTrigger: {
@@ -163,16 +163,17 @@ export default function HeroClient({ featuredProducts }: HeroClientProps) {
                 ref={textRef}
                 className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center px-4"
             >
-                <span className="mb-4 bg-white/20 backdrop-blur px-3 py-1 text-sm font-medium text-white rounded-full">
-                    Premium Cars. Premium Experience.
+                <span className="mb-4 bg-white/20 backdrop-blur px-3 py-1 text-sm font-medium text-primary rounded-full">
+                    Abyssinia Software Technology PLC
                 </span>
 
                 <h1 className="text-4xl sm:text-6xl font-bold text-white drop-shadow-xl">
-                    Find your next car with confidence
+                    Innovating Software Solutions That Drive Growth
                 </h1>
 
-                <p className="text-lg sm:text-2xl text-white mt-4 drop-shadow-sm">
-                    Elevate your travel experience with Adinas
+                <p className="text-lg sm:text-2xl text-white mt-4 drop-shadow-sm max-w-3xl">
+                    We build custom web and mobile applications tailored to your business needs,
+                    turning ideas into scalable, modern digital products.
                 </p>
             </div>
         </section>

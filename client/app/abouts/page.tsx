@@ -20,7 +20,7 @@ export default async function AboutPage(props: {
     const sp = await props.searchParams;
     const page = getPageParam(sp, "page");
     const resp = await fetchAbouts({ page });
-    const data = resp?.abouts ?? [];
+    const data = resp?.data ?? [];
 
     const respartners = await fetchPartners();
     const partners = respartners?.data ?? [];

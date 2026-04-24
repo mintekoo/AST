@@ -12,6 +12,147 @@ export type ApiListResponse<T> = {
   meta: Meta;
 };
 
+// Blog
+export type Blog = {
+  id: number;
+  title: string;
+  description: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type About = {
+  id: number;
+  title: string;
+  description: string;
+  image?: string | null;
+  vision?: string;
+  mission?: string;
+  values?: string;
+  isActive?: boolean;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type Certification = {
+  id: number;
+  title: string;
+  issuingOrganization: string;
+  issueDate: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type ContactPayload = {
+  fullName: string;
+  email?: string | null;
+  phone?: string | null;
+  message: string;
+};
+
+export type FAQ = {
+  id: number;
+  question: string;
+  answer: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Gallery = {
+  images: string[];
+  id: number;
+  title: string;
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type AppLocation = {
+  id: number;
+  name: string;
+  description: string;
+
+  phone: string[];
+  email: string[];
+  web: string[];
+
+  latitude: string;
+  longitude: string;
+
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type SocialPlatform =
+  | "facebook"
+  | "twitter"
+  | "instagram"
+  | "youtube"
+  | "tiktok"
+  | "telegram"
+  | "linkedin"
+  | "github"
+  | "whatsapp"
+  | "website";
+
+export type Social = {
+  id: number;
+  platform: SocialPlatform;
+  url: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Service = {
+  id: number;
+  title: string;
+  content: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+// Testimonial type
+export type Testimonial = {
+  id: number;
+  fullName: string;
+  content: string;
+  rating: number;
+  image?: string | null;
+  company?: string | null;
+  position?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Term = {
+  id: number;
+  title: string;
+  content: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
+export type Partner = {
+  id?: number;
+  name: string;
+  image?: string | File | null;
+  contact: string[];
+  createdAt?: string;
+  updatedAt?: string;
+};
+
+export type Project = {
+  id: number;
+  title: string;
+  content: string;
+  image?: string | null;
+  createdAt: string;
+  updatedAt: string;
+};
+
 // User type
 export type User = {
   id: number;
@@ -80,78 +221,4 @@ export type CreateBookingInput = {
   endDate: string;
   totalPrice: number;
   driver?: "yes" | "no";
-};
-
-// Testimonial type
-export type Testimonial = {
-  id: number;
-  clientName: string;
-  rating: number;
-  content: string;
-  image?: string | null;
-  userId?: number | null;
-  User?: User | null;
-  company?: string | null;
-  position?: string | null;
-  isActive?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-// Blog type
-export type Blog = {
-  id: number;
-  title: string;
-  slug?: string;
-  content: string;
-  image?: string | null;
-  authorId?: number;
-  categoryId?: number;
-  isPublished?: boolean;
-  User: User;
-  Category?: Category | null;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type Service = {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  image?: string | null;
-  isActive?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type About = {
-  id: number;
-  title: string;
-  description: string;
-  image?: string | null;
-  vision?: string;
-  mission?: string;
-  values?: string;
-  isActive?: boolean;
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-export type Partner = {
-  id?: number;
-  name: string;
-  image?: string | File | null;
-  contact: string[];
-  createdAt?: string;
-  updatedAt?: string;
-};
-
-
-export type Gallery = {
-  images: string[];
-  id: number;
-  title: string;
-  createdAt?: string;
-  updatedAt?: string;
 };

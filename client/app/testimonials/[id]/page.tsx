@@ -1,17 +1,17 @@
 // app/testimonials/[id]/page.tsx
 import Container from "@/components/ui/Container";
 import { fetchTestimonial, API_BASE_URL } from "@/lib/api";
-import type { Testimonial } from "@/lib/types";
 import Image from "next/image";
 
 export default async function TestimonialDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const t: Testimonial = await fetchTestimonial(id);
+  const resp = await fetchTestimonial(id);
+  const t = resp.data;
 
   const fullImage = t.image ? `${API_BASE_URL}/${t.image}` : undefined;
 
   return (
-    <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+    <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark m-8 py-10 sm:py-14 lg:py-16">
       <Container className="py-10 sm:py-14 lg:py-16">
         <div className="mx-auto max-w-3xl rounded-2xl bg-card-background dark:bg-card-background-dark p-6 shadow-sm ring-1 ring-border animate-slide-up">
           {/* Client info */}
@@ -19,20 +19,15 @@ export default async function TestimonialDetailPage({ params }: { params: Promis
             <div className="flex items-center gap-3">
               {fullImage ? (
                 <div className="relative h-12 w-12 overflow-hidden rounded-full ring-1 ring-border">
-                  <Image src={fullImage} alt={t.clientName} fill className="object-cover" unoptimized />
+                  <Image src={fullImage} alt={t.fullName} fill className="object-cover" unoptimized />
                 </div>
               ) : (
                 <div className="h-12 w-12 rounded-full bg-muted-100 dark:bg-muted-200" />
               )}
               <div>
                 <div className="text-base font-medium text-foreground dark:text-foreground-dark">
-                  {t.clientName}
+                  {t.fullName}
                 </div>
-                {t.User?.email && (
-                  <div className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
-                    {t.User.email}
-                  </div>
-                )}
               </div>
             </div>
             {(t.position || t.company) && (

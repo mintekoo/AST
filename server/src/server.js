@@ -2,6 +2,7 @@ import app from './app.js';
 import { createDatabase } from '#config/database.js';
 import logger from '#config/logger.js';
 import { syncDB } from '#models/index.js';
+import createSuperAdmin from '#config/superAdmin.js';
 
 const PORT = process.env.PORT;
 
@@ -20,6 +21,9 @@ const startServer = async () => {
     await createDatabase();
 
     await syncDB();
+
+    await createSuperAdmin();
+    logger.info('👑 Super Admin check complete');
 
     logger.info(`🌐 Environment: ${process.env.NODE_ENV || 'development'}`);
     logger.info(`📦 Database: ${process.env.DB_NAME}`);

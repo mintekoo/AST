@@ -3,19 +3,20 @@ import logger from '#config/logger.js';
 import { sequelize } from '#config/database.js';
 
 // Import all models
-import About from './About.js';
-import Certification from './Certification.js';
-import FAQ from './FAQ.js';
-import Location from './Location.js';
-import Partner from './Partner.js';
-import Service from './Service.js';
-import Testimonial from './Testimonial.js';
-import Blog from './Blog.js';
-import Contact from './Contact.js';
-import Gallery from './Gallery.js';
-import Link from './Link.js';
-import Project from './Project.js';
-import Term from './Term.js';
+import Admin from './admin.model.js';
+import About from './about.model.js';
+import Certification from './certification.model.js';
+import FAQ from './faq.model.js';
+import Location from './location.model.js';
+import Partner from './partner.model.js';
+import Service from './service.model.js';
+import Testimonial from './testimonial.model.js';
+import Blog from './blog.model.js';
+import Contact from './contact.model.js';
+import Gallery from './gallery.model.js';
+import Link from './link.model.js';
+import Project from './project.model.js';
+import Term from './term.model.js';
 
 /**
  * ========================
@@ -26,6 +27,9 @@ export const syncDB = async () => {
   try {
     await sequelize.authenticate();
     logger.info('🔐 Database connection established successfully.');
+
+    await Admin.sync({ alter: false });
+    logger.info('🛡️ Admin table synced successfully!');
 
     await About.sync({ alter: false });
     logger.info('📄 About table synced successfully!');
@@ -80,6 +84,7 @@ export const syncDB = async () => {
 // Export sequelize + models
 export {
   sequelize,
+  Admin,
   About,
   Certification,
   FAQ,

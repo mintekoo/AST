@@ -1,0 +1,126 @@
+import { fetchLocations } from "@/lib/api";
+import {
+  MapPin,
+  Phone,
+  Mail,
+  Globe,
+} from "lucide-react";
+
+export default async function LocationsPage() {
+  const resp = await fetchLocations();
+  const locations = resp?.data ?? [];
+
+  return (
+    <main className="py-20 bg-background text-foreground">
+      <div className="max-w-6xl mx-auto px-4">
+
+        {/* Header */}
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-extrabold text-primary">
+            Our Locations
+          </h2>
+          <p className="mt-4 text-lg text-muted">
+            Find us, contact us, or visit our office.
+          </p>
+        </div>
+
+        {locations.map((loc) => (
+          <div
+            key={loc.id}
+            className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16"
+          >
+            {/* LEFT: Info */}
+            <div className="space-y-6">
+
+              {/* Address */}
+              <InfoItem
+                icon={<MapPin className="w-6 h-6 text-primary" />}
+                text={
+                  <>
+                    <strong>{loc.name}</strong>
+                    <br />
+                    Lat: {loc.latitude}, Lng: {loc.longitude}
+                  </>
+                }
+              />
+
+              {/* Phones */}
+              {loc.phone?.length > 0 && (
+                <InfoItem
+                  icon={<Phone className="w-6 h-6 text-primary" />}
+                  text={
+                    <>
+                      {loc.phone.map((p, i) => (
+                        <div key={i}>+251 {p}</div>
+                      ))}
+                    </>
+                  }
+                />
+              )}
+
+              {/* Emails */}
+              {loc.email?.length > 0 && (
+                <InfoItem
+                  icon={<Mail className="w-6 h-6 text-primary" />}
+                  text={
+                    <>
+                      {loc.email.map((e, i) => (
+                        <div key={i}>{e}</div>
+                      ))}
+                    </>
+                  }
+                />
+              )}
+
+              {/* Websites */}
+              {loc.web?.length > 0 && (
+                <InfoItem
+                  icon={<Globe className="w-6 h-6 text-primary" />}
+                  text={
+                    <>
+                      {loc.web.map((w, i) => (
+                        <a
+                          key={i}
+                          href={`https://${w}`}
+                          target="_blank"
+                          className="block hover:underline"
+                        >
+                          {w}
+                        </a>
+                      ))}
+                    </>
+                  }
+                />
+              )}
+            </div>
+
+            {/* RIGHT: Google Map */}
+            <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-xl border border-muted">
+              <iframe
+                src={`https://www.google.com/maps?q=${loc.latitude},${loc.longitude}&z=15&output=embed`}
+                width="100%"
+                height="100%"
+                loading="lazy"
+                allowFullScreen
+              />
+            </div>
+
+            <span className="col-span-full block mt-4 text-center">
+              <p className="text-muted">{loc.description}</p>
+            </span>
+          </div>
+        ))}
+      </div>
+    </main>
+  );
+}
+
+/* Helper */
+function InfoItem({ icon, text }: { icon: React.ReactNode; text: React.ReactNode }) {
+  return (
+    <div className="flex items-start gap-4 p-4 rounded-xl border border-muted shadow-sm">
+      {icon}
+      <div className="text-foreground/80">{text}</div>
+    </div>
+  );
+}

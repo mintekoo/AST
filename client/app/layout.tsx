@@ -75,7 +75,7 @@ export default function RootLayout({
         >
           <Navbar />
           <ScrollToTop /> 
-          {/* <Hero /> */}
+          <Hero />
           {children}
           <Analytics />
           <Footer />

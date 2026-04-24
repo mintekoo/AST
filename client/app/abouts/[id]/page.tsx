@@ -1,12 +1,12 @@
 // app/about/[id]/page.tsx
 import Container from "@/components/ui/Container";
 import { fetchAbout, API_BASE_URL } from "@/lib/api";
-import type { About } from "@/lib/types";
 import Image from "next/image";
 
 export default async function AboutDetailPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params;
-    const about: About = await fetchAbout(id);
+    const resp = await fetchAbout(id);
+    const about = resp.data;
 
     const fullImage = about.image ? `${API_BASE_URL}/${about.image}` : "/window.svg";
     const publishDate = about.createdAt ? new Date(about.createdAt).toLocaleDateString() : "";

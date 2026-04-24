@@ -20,7 +20,7 @@ export default async function TestimonialsPage(props: {
   const sp = await props.searchParams;
   const page = getPageParam(sp, "page");
   const resp = await fetchTestimonials({ page });
-  const data = resp?.testimonials ?? [];
+  const data = resp?.data ?? [];
 
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -42,16 +42,11 @@ export default async function TestimonialsPage(props: {
                   <div className="mb-3 flex flex-col gap-1">
                     <div className="flex items-center gap-2">
                       <div className="relative h-9 w-9 overflow-hidden rounded-full ring-1 ring-border">
-                        <Image src={fullImage} alt={t.clientName} fill className="object-cover" unoptimized />
+                        <Image src={fullImage} alt={t.fullName} fill className="object-cover" unoptimized />
                       </div>
                       <div className="text-sm font-medium text-foreground dark:text-foreground-dark">
-                        {t.clientName}
+                        {t.fullName}
                       </div>
-                      {t.User?.email && (
-                        <span className="text-xs text-muted-foreground dark:text-muted-foreground-dark">
-                          • {t.User.email}
-                        </span>
-                      )}
                     </div>
                     {(t.position || t.company) && (
                       <div className="text-xs text-muted-foreground dark:text-muted-foreground-dark">

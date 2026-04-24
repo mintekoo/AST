@@ -6,7 +6,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import path from 'path';
 import cookieParser from 'cookie-parser';
-import mainRoutes from '#routes/mainRoutes.js';
+import mainsRoutes from '#routes/mains.routes.js';
 import { errorHandler } from '#errors/errorHandler.js';
 
 const app = express();
@@ -73,7 +73,7 @@ app.get('/', (req, res) => {
 // ========================
 // API Routes
 // ========================
-app.use('/api', mainRoutes);
+app.use('/api', mainsRoutes);
 
 // ========================
 // 404 Handler

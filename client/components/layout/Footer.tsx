@@ -1,74 +1,265 @@
-"use client";
-
-import React from "react";
 import Link from "next/link";
 import Container from "@/components/ui/Container";
-import { Phone, Mail, MapPin, Globe } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  MapPin,
+  Globe,
+  Facebook,
+  Linkedin,
+  Twitter,
+  Instagram,
+} from "lucide-react";
 
-export default function Footer() {
+import { fetchLocations, fetchSocials } from "@/lib/api";
+import type { AppLocation, Social } from "@/lib/types";
+
+export default async function Footer() {
+  const [locRes, socialRes] = await Promise.all([
+    fetchLocations(),
+    fetchSocials(),
+  ]);
+
+  const locations: AppLocation[] = locRes?.data ?? [];
+  const socials: Social[] = socialRes?.data ?? [];
+
+  const primaryLocation = locations[0];
+
   const productLinks = [
     { name: "Products", href: "/cars" },
     { name: "Our Fleet", href: "/categories" },
+    { name: "Certifications", href: "/certifications" },
+    { name: "Projects", href: "/projects" },
+    { name: "Terms & Conditions", href: "/terms" },
+    { name: "FAQs", href: "/faqs" },
+    { name: "Social Media", href: "/socials" },
+    { name: "Locations", href: "/locations" },
+    { name: "Contact Us", href: "/contactus" },
   ];
 
   const companyLinks = [
     { name: "Blog", href: "/blogs" },
     { name: "About", href: "/abouts" },
-    { name: "Service", href: "/services" },
+    { name: "Services", href: "/services" },
     { name: "Partners", href: "/partners" },
     { name: "Gallery", href: "/galleries" },
-    { name: "Contact", href: "/contacts" },
     { name: "Testimonials", href: "/testimonials" },
   ];
 
-  const contactInfo = [
-    { icon: MapPin, text: "Addis Ababa, around Pushkin Square" },
-    { icon: Phone, text: "0911 510313 / 0977 777717 / 911 323333", href: "tel:0911510313" },
-    { icon: Mail, text: "soliyano10@gmail.com", href: "mailto:soliyano10@gmail.com" },
-    { icon: Mail, text: "adinascarrent@gmail.com", href: "mailto:adinascarrent@gmail.com" },
-    { icon: Globe, text: "www.adinascarrent.com", href: "https://adinascarrent.com" },
-  ];
+  // icon mapper (safe fallback)
+  const getIcon = (platform: string) => {
+    const name = platform.toLowerCase();
+    if (name.includes("facebook")) return Facebook;
+    if (name.includes("linkedin")) return Linkedin;
+    if (name.includes("twitter")) return Twitter;
+    if (name.includes("instagram")) return Instagram;
+    return Globe;
+  };
 
   return (
-
     <footer className="mt-16 border-t bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      <Container className="py-12 flex flex-col gap-12">
 
-      <div className="m-10 p-10 relative flex h-42 w-42 items-center justify-center rounded-full bg-white shadow-md overflow-hidden">
+        {/* GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-10">
 
-        {/* 🔄 Rotating circle text */}
-        <svg
-          className="absolute inset-0 w-full h-full animate-spin-slow"
-          viewBox="0 0 100 100"
-        >
-          <defs>
-            <path
-              id="circlePath"
-              d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
-            />
-          </defs>
+          {/* Brand */}
+          <div className="space-y-4">
+            <Link href="/" className="flex items-center gap-3">
+              <span className="inline-flex h-10 w-16 items-center justify-center rounded-lg bg-primary text-white font-bold">
+                AST
+              </span>
+              <span className="text-lg font-semibold">
+                Abyssinia Software
+              </span>
+            </Link>
 
-          <text className="text-[8px] fill-green-600 tracking-widest uppercase">
-            <textPath href="#circlePath">
-              Abyssinia Software Technology PLC • Abyssinia Software Technology PLC •
-            </textPath>
-          </text>
-        </svg>
+            <p className="text-sm text-gray-600 dark:text-gray-400">
+              Innovating software solutions for modern businesses.
+            </p>
 
-        {/* ⭐ CENTER AST (YOUR EXACT STYLE — UNCHANGED) */}
-        <span className="inline-flex h-32 w-32 items-center justify-center rounded-full bg-white text-6xl font-bold">
-          <span
-            className="text-transparent bg-clip-text bg-primary"
-            style={{
-              backgroundImage:
-                "radial-gradient(circle, #ffffff 1px, transparent 1px)",
-              backgroundSize: "6px 6px",
-            }}
-          >
-            AST
-          </span>
-        </span>
+            {/* SOCIAL ICONS (NEW) */}
+            <div className="flex items-center gap-3 pt-2">
+              {socials.map((s) => {
+                const Icon = getIcon(s.platform);
 
-      </div>
+                return (
+                  <a
+                    key={s.id}
+                    href={s.url}
+                    target="_blank"
+                    className="
+                      w-9 h-9 flex items-center justify-center
+                      rounded-full bg-white dark:bg-gray-800
+                      shadow-sm hover:shadow-md
+                      hover:scale-110 transition
+                      text-primary
+                    "
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Product Links */}
+          <div>
+            <h3 className="text-sm font-semibold mb-3">Products</h3>
+            <ul className="space-y-2 text-sm">
+              {productLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="hover:text-primary transition">
+                    {l.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Company Links */}
+          <div>
+            <h3 className="text-sm font-semibold mb-3">Company</h3>
+            <ul className="space-y-2 text-sm">
+              {companyLinks.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href} className="hover:text-primary transition">
+                    {l.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-sm font-semibold mb-3">Contact</h3>
+
+            <ul className="space-y-3 text-sm">
+              {primaryLocation?.name && (
+                <li className="flex gap-2">
+                  <MapPin className="w-4 h-4 text-primary mt-1" />
+                  <span>{primaryLocation.name}</span>
+                </li>
+              )}
+
+              {primaryLocation?.phone?.map((p, i) => (
+                <li key={i} className="flex gap-2">
+                  <Phone className="w-4 h-4 text-primary mt-1" />
+                  <a href={`tel:${p}`} className="hover:text-primary">
+                    {p}
+                  </a>
+                </li>
+              ))}
+
+              {primaryLocation?.email?.map((e, i) => (
+                <li key={i} className="flex gap-2">
+                  <Mail className="w-4 h-4 text-primary mt-1" />
+                  <a href={`mailto:${e}`} className="hover:text-primary">
+                    {e}
+                  </a>
+                </li>
+              ))}
+
+              {primaryLocation?.web?.map((w, i) => (
+                <li key={i} className="flex gap-2">
+                  <Globe className="w-4 h-4 text-primary mt-1" />
+                  <a
+                    href={`https://${w}`}
+                    target="_blank"
+                    className="hover:text-primary"
+                  >
+                    {w}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        {/* BOTTOM BAR (HORIZONTAL CLEAN LAYOUT) */}
+        <div className="border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm">
+
+          <p className="text-center md:text-left">
+            © {new Date().getFullYear()} Abyssinia Software. All rights reserved.
+          </p>
+
+          {/* CENTER LINE STYLE BRAND */}
+          <div className="hidden md:flex items-center gap-2 text-xs text-gray-500">
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            Built with modern software engineering
+          </div>
+
+          {/* SOCIAL MINI ROW (SECOND STYLE) */}
+          <div className="flex items-center gap-2">
+            {socials.slice(0, 4).map((s) => {
+              const Icon = getIcon(s.platform);
+              return (
+                <a
+                  key={s.id}
+                  href={s.url}
+                  target="_blank"
+                  className="p-2 rounded-full hover:bg-primary hover:text-white transition"
+                >
+                  <Icon className="w-4 h-4" />
+                </a>
+              );
+            })}
+          </div>
+
+        </div>
+
+      </Container>
+    </footer>
+  );
+}
+
+
+
+
+// <div className="m-10 p-10 relative flex h-42 w-42 items-center justify-center rounded-full bg-white shadow-md overflow-hidden">
+
+//   {/* 🔄 Rotating circle text */}
+//   <svg
+//     className="absolute inset-0 w-full h-full animate-spin-slow"
+//     viewBox="0 0 100 100"
+//   >
+//     <defs>
+//       <path
+//         id="circlePath"
+//         d="M 50,50 m -40,0 a 40,40 0 1,1 80,0 a 40,40 0 1,1 -80,0"
+//       />
+//     </defs>
+
+//     <text className="text-[8px] fill-green-600 tracking-widest uppercase">
+//       <textPath href="#circlePath">
+//         Abyssinia Software Technology PLC • Abyssinia Software Technology PLC •
+//       </textPath>
+//     </text>
+//   </svg>
+
+//   {/* ⭐ CENTER AST (YOUR EXACT STYLE — UNCHANGED) */}
+//   <span className="inline-flex h-32 w-32 items-center justify-center rounded-full bg-white text-6xl font-bold">
+//     <span
+//       className="text-transparent bg-clip-text bg-primary"
+//       style={{
+//         backgroundImage:
+//           "radial-gradient(circle, #ffffff 1px, transparent 1px)",
+//         backgroundSize: "6px 6px",
+//       }}
+//     >
+//       AST
+//     </span>
+//   </span>
+
+// </div>
+
+
+
+
+{/*       
+
+
 
       <div className="m-10 p-10">
 
@@ -88,9 +279,9 @@ export default function Footer() {
 
         </span>
 
-      </div>
+      </div> */}
 
-      {/* 
+{/* 
       <span className="inline-flex h-32 w-32 items-center justify-center rounded-full shadow-sm bg-white text-primary text-6xl font-bold">
         AST
       </span>
@@ -135,102 +326,3 @@ export default function Footer() {
   [background-size:8px_8px]">
         AST
       </span> */}
-
-
-
-
-
-      <Container className="py-12 flex flex-col gap-10 md:gap-16">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <Link href="/" className="flex items-center gap-2">
-              <span className="inline-flex h-10 w-20 items-center justify-center rounded-lg shadow-sm bg-primary text-white text-xl font-bold">
-                AST
-              </span>
-              <span className="text-lg font-semibold">
-                Abyssinia Softwareal
-              </span>
-            </Link>
-            <p className="text-sm text-gray-600 dark:text-gray-400">
-              Abyssinia Softwareal – Your trusted partner in safe, reliable, and efficient transport solutions.
-            </p>
-          </div>
-
-          {/* Product Links */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold">Products</h3>
-            <ul className="space-y-1 text-sm">
-              {productLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Company Links */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold">Company</h3>
-            <ul className="space-y-1 text-sm">
-              {companyLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
-                  >
-                    {link.name}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Contact Info */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold">Contact</h3>
-            <ul className="space-y-2 text-sm">
-              {contactInfo.map((info, index) => (
-                <li key={index} className="flex items-start gap-2">
-                  <info.icon className="w-4 h-4 mt-1 flex-shrink-0 text-red-600 dark:text-red-500" />
-                  {info.href ? (
-                    <a
-                      href={info.href}
-                      target={info.href.startsWith("http") ? "_blank" : undefined}
-                      rel={info.href.startsWith("http") ? "noopener noreferrer" : undefined}
-                      className="underline text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-500 transition-colors"
-                    >
-                      {info.text}
-                    </a>
-                  ) : (
-                    <span className="text-gray-600 dark:text-gray-400">{info.text}</span>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Bottom */}
-        <div className="border-t pt-6 text-sm flex flex-col md:flex-row justify-between items-center gap-4">
-          <p>© {new Date().getFullYear()} Abyssinia Softwareal. All rights reserved.</p>
-
-          <p className="text-center">
-            Developed by <span className="font-semibold hover:text-green-600 dark:hover:text-green-500 transition-colors">Abyssinia Software Technology</span>
-          </p>
-
-          <div className="flex gap-6">
-            <Link href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">Twitter</Link>
-            <Link href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">LinkedIn</Link>
-            <Link href="#" className="hover:text-red-600 dark:hover:text-red-500 transition-colors">GitHub</Link>
-          </div>
-        </div>
-      </Container>
-    </footer>
-  );
-}

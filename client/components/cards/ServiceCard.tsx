@@ -1,17 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../ui/Button";
+import type { Service } from "@/lib/types";
+import { API_BASE_URL } from "@/lib/api";
 
-export type ServiceCardType = {
-    id: string;
-    name: string;
-    description: string;
-    price: number;
-    imageUrl?: string | null;
-    createdAt?: string;
-};
+export default function ServiceCard({ service }: { service: Service }) {
+    const imageUrl = service.image
+        ? `${API_BASE_URL}/${service.image}`
+        : null;
 
-export default function ServiceCard({ service }: { service: ServiceCardType }) {
     return (
         <Link
             href={`/services/${service.id}`}
@@ -26,19 +23,16 @@ export default function ServiceCard({ service }: { service: ServiceCardType }) {
                 className="relative h-40 overflow-hidden rounded-t-2xl"
                 style={{ backgroundColor: "var(--color-muted)" }}
             >
-                {service.imageUrl ? (
+                {imageUrl ? (
                     <Image
-                        src={service.imageUrl}
-                        alt={service.name}
+                        src={imageUrl}
+                        alt={service.title}
                         fill
                         className="object-cover"
                         unoptimized
                     />
                 ) : (
-                    <div
-                        className="flex items-center justify-center h-full"
-                        style={{ color: "var(--color-muted)" }}
-                    >
+                    <div className="flex items-center justify-center h-full text-muted">
                         No Image
                     </div>
                 )}
@@ -47,21 +41,23 @@ export default function ServiceCard({ service }: { service: ServiceCardType }) {
             {/* Content */}
             <div className="flex flex-col flex-1 p-4 justify-between">
                 <div>
-                    <h3 style={{ color: "var(--color-foreground)" }} className="text-base font-semibold leading-6">
-                        {service.name}
+                    <h3
+                        className="text-base font-semibold leading-6"
+                        style={{ color: "var(--color-foreground)" }}
+                    >
+                        {service.title}
                     </h3>
+
                     <p
                         className="text-sm line-clamp-3 mt-1"
                         style={{ color: "var(--color-muted)" }}
                     >
-                        {service.description}
+                        {service.content}
                     </p>
                 </div>
-                <div className="mt-3 flex flex-col gap-2">
-                    {/* <p style={{ color: "var(--color-primary)" }} className="text-sm font-medium">
-                        ETB {service.price.toFixed(0)}
-                    </p> */}
-                    <Button size="sm" variant="primary" >
+
+                <div className="mt-3">
+                    <Button size="sm" variant="primary">
                         View Details
                     </Button>
                 </div>

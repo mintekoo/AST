@@ -22,7 +22,7 @@ export default async function BlogsPage(props: {
   const sp = await props.searchParams;
   const page = getPageParam(sp, "page");
   const resp = await fetchBlogs({ page });
-  const data = resp?.blogs ?? [];
+  const data = resp?.data ?? [];
 
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -69,7 +69,7 @@ export default async function BlogsPage(props: {
                       {b.title}
                     </h3>
                     <p className="line-clamp-3 text-sm text-muted-foreground dark:text-muted-foreground-dark">
-                      {b.content}
+                      {b.description}
                     </p>
                   </div>
 

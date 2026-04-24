@@ -2,29 +2,33 @@
 
 import Image from "next/image";
 import { useEffect, useRef } from "react";
-import type { Product } from "@/lib/types";
+import type { Project } from "@/lib/types";
 import { API_BASE_URL } from "@/lib/api";
 
 interface CarouselProps {
-  products: Product[];
+  products: Project[];
   currentSlide: number;
 }
 
-function parseImages(images: unknown): string[] {
-  if (!images) return [];
-  try {
-    if (typeof images === "string") images = JSON.parse(images);
-    if (typeof images === "string") images = JSON.parse(images); // double encoded
-  } catch {}
-  return Array.isArray(images) ? images : [];
+function getImage(image: unknown): string {
+  if (!image) return "/placeholder.png";
+
+  if (typeof image === "string") {
+    return image;
+  }
+
+  return "/placeholder.png";
 }
 
 export default function HeroProductsCarousel({ products, currentSlide }: CarouselProps) {
   const imageRef = useRef<HTMLDivElement>(null);
 
-  const product = products[currentSlide];
-  const imgs = parseImages(product?.images);
-  const url = imgs[0] ? `${API_BASE_URL}/${imgs[0].replace(/^\/+/, "")}` : "/placeholder.png";
+  const Project = products[currentSlide];
+  const imagePath = getImage(Project?.image);
+
+  const url = imagePath
+    ? `${API_BASE_URL}/${imagePath.replace(/^\/+/, "")}`
+    : "/placeholder.png";
 
   useEffect(() => {
     if (!imageRef.current) return;
@@ -47,7 +51,7 @@ export default function HeroProductsCarousel({ products, currentSlide }: Carouse
       >
         <Image
           src={url}
-          alt={product?.title || "Car"}
+          alt={Project?.title ?? "Project"}
           fill
           className="object-cover"
           unoptimized

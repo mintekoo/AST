@@ -20,7 +20,7 @@ export default async function ServicesPage(props: {
     const sp = await props.searchParams;
     const page = getPageParam(sp, "page");
     const resp = await fetchServices({ page });
-    const data = resp?.services ?? [];
+    const data = resp?.data ?? [];
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -44,7 +44,7 @@ export default async function ServicesPage(props: {
                                 <div className="relative aspect-video overflow-hidden rounded-t-2xl">
                                     <Image
                                         src={fullImage}
-                                        alt={s.name}
+                                        alt={s.title}
                                         fill
                                         className="object-cover transition-transform duration-300 group-hover:scale-105"
                                         unoptimized
@@ -54,10 +54,10 @@ export default async function ServicesPage(props: {
                                 {/* Content */}
                                 <div className="space-y-2 p-4">
                                     <h3 className="text-base font-semibold text-foreground dark:text-foreground-dark leading-6">
-                                        {s.name}
+                                        {s.title}
                                     </h3>
                                     <p className="line-clamp-3 text-sm text-muted-foreground dark:text-muted-foreground-dark">
-                                        {s.description}
+                                        {s.content}
                                     </p>
                                 </div>
 

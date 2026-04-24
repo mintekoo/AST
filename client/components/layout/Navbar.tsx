@@ -2,11 +2,10 @@
 "use client";
 
 import Link from "next/link";
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Menu, X } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ThemeToggle from "@/components/theme/ThemeToggle";
-import Image from "next/image";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
@@ -21,15 +20,12 @@ const NAV_HOVER_HEIGHT = 128;
 // --- Navigation Links ---
 const navLinks = [
   { href: "/", label: "Home" },
-  { href: "/cars", label: "Cars" },
+  { href: "/projects", label: "Projects" },
   { href: "/blogs", label: "Blog" },
   { href: "/abouts", label: "About" },
   { href: "/services", label: "Services" },
   { href: "/testimonials", label: "Testimonials" },
-  // { href: "/partners", label: "Partners" },
   { href: "/galleries", label: "Gallery" },
-  { href: "/contacts", label: "Contact Us" },
-  { href: "/rentals", label: "Register Car" },
 ];
 
 export default function Navbar() {
@@ -217,10 +213,10 @@ export default function Navbar() {
         {/* RIGHT SIDE */}
         <div className="flex items-center gap-3">
           <Link
-            href="/cars"
+            href="/contactus"
             className="hidden md:block rounded-full px-5 py-[8px] bg-primary text-white text-sm font-semibold shadow-lg hover:bg-primary-hover transition"
           >
-            Book Now
+            Contact Us
           </Link>
 
           <ThemeToggle />
@@ -254,11 +250,11 @@ export default function Navbar() {
           ))}
 
           <Link
-            href="/cars"
+            href="/contactus"
             onClick={() => setIsOpen(false)}
             className="mt-3 rounded-full bg-primary text-white text-center py-3 text-sm font-semibold shadow-md hover:bg-primary-hover transition"
           >
-            Book Now
+            Contact Us
           </Link>
         </nav>
       </div>

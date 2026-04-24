@@ -16,7 +16,7 @@ function mapBackendTestimonial(t: BackendTestimonial): TestimonialCardType {
 
   return {
     id: t.id.toString(),
-    name: t.clientName,
+    name: t.fullName,
     content: t.content,
     rating: t.rating,
     imageUrl: fullImage,

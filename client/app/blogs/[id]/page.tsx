@@ -2,13 +2,12 @@
 import Container from "@/components/ui/Container";
 import { fetchBlog } from "@/lib/api";
 import { API_BASE_URL } from "@/lib/api";
-import type { Blog } from "@/lib/types";
 import Image from "next/image";
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const blog: Blog = await fetchBlog(id);
-
+  const resp = await fetchBlog(id);
+  const blog = resp.data;
   const fullMedia = blog.image ? `${API_BASE_URL}/${blog.image}` : null;
   const isVideo = fullMedia?.match(/\.(mp4|webm|mkv|ogg)$/i);
 
@@ -39,7 +38,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ id:
           <h1 className="text-2xl font-heading font-semibold sm:text-3xl">{blog.title}</h1>
 
           <article className="prose prose-zinc mt-6 max-w-none dark:prose-invert">
-            {blog.content}
+            {blog.description}
           </article>
         </div>
       </Container>
