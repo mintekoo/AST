@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import Pagination from "@/components/ui/Pagination";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fetchTerms, API_BASE_URL } from "@/lib/api";
 import type { Term } from "@/lib/types";
@@ -13,6 +14,7 @@ export default async function TermsPage(props: {
 
     const resp = await fetchTerms({ page });
     const data = resp?.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -57,6 +59,7 @@ export default async function TermsPage(props: {
                     })}
                 </div>
             </Container>
+            <Pagination meta={meta} basePath="/terms" />
         </main>
     );
 }

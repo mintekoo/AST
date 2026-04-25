@@ -10,7 +10,7 @@ export function Skeleton({ className }: SkeletonProps) {
   return (
     <div
       className={[
-        "animate-pulse rounded-md bg-zinc-200 dark:bg-zinc-800",
+        "animate-pulse rounded-xl bg-skeleton",
         className ?? "",
       ].join(" ")}
       aria-hidden

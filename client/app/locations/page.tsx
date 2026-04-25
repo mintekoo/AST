@@ -4,6 +4,7 @@ import {
   Phone,
   Mail,
   Globe,
+  Clock,
 } from "lucide-react";
 
 export default async function LocationsPage() {
@@ -30,7 +31,7 @@ export default async function LocationsPage() {
             className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16"
           >
             {/* LEFT: Info */}
-            <div className="space-y-6">
+            <div className="space-y-6 text-bold">
 
               {/* Address */}
               <InfoItem
@@ -92,10 +93,33 @@ export default async function LocationsPage() {
                   }
                 />
               )}
+
+              {/* Working Hours */}
+              {loc.workingHours && (
+                <InfoItem
+                  icon={<Clock className="w-6 h-6 text-primary" />}
+                  text={
+                    <div className="space-y-1 text-sm">
+                      {Object.entries(loc.workingHours).map(([day, hours]) => (
+                        <div key={day} className="flex justify-between gap-4">
+                          <span className="capitalize text-foreground/70">
+                            {day}
+                          </span>
+                          <span className="font-medium text-foreground">
+                            {hours as string}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  }
+                />
+              )}
+
+
             </div>
 
             {/* RIGHT: Google Map */}
-            <div className="w-full h-[400px] rounded-xl overflow-hidden shadow-xl border border-muted">
+            <div className="w-full h-[600px] rounded-xl overflow-hidden shadow-xl border border-muted">
               <iframe
                 src={`https://www.google.com/maps?q=${loc.latitude},${loc.longitude}&z=15&output=embed`}
                 width="100%"

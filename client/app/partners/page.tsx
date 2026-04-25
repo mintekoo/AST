@@ -5,6 +5,7 @@ import { fetchPartners, API_BASE_URL } from "@/lib/api";
 import type { Partner } from "@/lib/types";
 import Image from "next/image";
 import Clients from "@/app/staticsPages/Clients";
+import Pagination from "@/components/ui/Pagination";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -22,6 +23,7 @@ export default async function PartnersPage(props: {
     // Fetch partners data
     const resp = await fetchPartners({ page });
     const data: Partner[] = resp?.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -50,21 +52,13 @@ export default async function PartnersPage(props: {
 
                                 <div className="p-4">
                                     <h3 className="text-lg font-semibold">{p.name}</h3>
-                                    {/* {p.contact && p.contact.length > 0 ? (
-                                        <ul className="mt-1 text-sm text-muted-700 dark:text-zinc-400">
-                                            {p.contact.map((c, i) => (
-                                                <li key={i}>{c}</li>
-                                            ))}
-                                        </ul>
-                                    ) : (
-                                        <p className="mt-1 text-sm text-muted-400">No contact info</p>
-                                    )} */}
                                 </div>
                             </div>
                         );
                     })}
 
                 </div>
+                <Pagination meta={meta} basePath="/partners" />
                 {/* ADD THIS Clients */}
                 <div className="mt-20">
                     <Clients />

@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import Pagination from "@/components/ui/Pagination";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fetchCertifications, API_BASE_URL } from "@/lib/api";
 import type { Certification } from "@/lib/types";
@@ -22,6 +23,7 @@ export default async function CertificationsPage(props: {
 
     const resp = await fetchCertifications({ page });
     const data = resp?.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -71,6 +73,7 @@ export default async function CertificationsPage(props: {
                         );
                     })}
                 </div>
+                <Pagination meta={meta} basePath="/certifications" />
             </Container>
         </main>
     );

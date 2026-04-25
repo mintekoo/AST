@@ -58,6 +58,19 @@ const Location = sequelize.define(
         }
       },
     },
+    workingHours: {
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: [],
+      get() {
+        const raw = this.getDataValue('workingHours');
+        try {
+          return typeof raw === 'string' ? JSON.parse(raw) : raw;
+        } catch {
+          return raw;
+        }
+      },
+    },
     latitude: {
       type: DataTypes.DECIMAL(10, 7),
       allowNull: true,

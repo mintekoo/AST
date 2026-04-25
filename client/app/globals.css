@@ -2,12 +2,26 @@
 
 /* Base theme variables */
 :root {
+  /* Brand Colors */
   --color-background: #ffffff;
   --color-foreground: #171717;
-  --color-primary: #089D25;
+  --color-primary: #089d25;
   --color-muted: #5c5c5c;
-  --color-primary-hover: #FCB32A;
+  --color-primary-hover: #fcb32a;
+  --color-muted: #5c5c5c;
 
+  /* Card & Surface Colors - Light */
+  --color-card-bg: #f8fafc; /* Subtle off-white for cards */
+  --color-border: rgba(0, 0, 0, 0.08);
+  --color-skeleton: #e2e8f0;
+
+  /* Footer Specific (Premium Dark Anchor) */
+  --color-footer-bg: #0f172a;
+  --color-footer-text: #f8fafc;
+  --color-footer-muted: #94a3b8;
+  --color-footer-border: rgba(255, 255, 255, 0.1);
+
+  /* Fonts */
   --font-sans: "Geist", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "Geist Mono", monospace;
 }
@@ -16,19 +30,39 @@
 html.dark {
   --color-background: #121212;
   --color-foreground: #f5f5f5;
-  --color-primary: #089D25;
+  --color-primary: #089d25;
   --color-muted: #a0a0a0;
+
+  /* Card & Surface Colors - Dark */
+  --color-card-bg: #1e1e1e; /* Elevated gray for cards */
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-skeleton: #2d2d2d;
+
+  /* Slightly deeper black for footer in dark mode */
+  --color-footer-bg: #020617;
+  --color-footer-text: #f1f5f9;
+  --color-footer-muted: #64748b;
+  --color-footer-border: rgba(255, 255, 255, 0.05);
 }
 
+/* Base Styles */
 body {
   background-color: var(--color-background);
   color: var(--color-foreground);
   font-family: var(--font-sans);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+  line-height: 1.5;
 }
+
+/* Animations */
 .fade-zoom {
   opacity: 0;
   transform: scale(1.05) translateY(10px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
 }
 
 .fade-zoom.fade-zoom {
@@ -36,7 +70,7 @@ body {
   transform: scale(1) translateY(0px);
 }
 
-/* Tailwind utility overrides using CSS variables */
+/* Utility Class Overrides */
 .text-foreground {
   color: var(--color-foreground);
 }
@@ -53,7 +87,62 @@ body {
   background-color: var(--color-primary);
 }
 
+/* Footer-Specific Utilities */
+.bg-footer {
+  background-color: var(--color-footer-bg);
+}
+
+.text-footer {
+  color: var(--color-footer-text);
+}
+
+.text-footer-muted {
+  color: var(--color-footer-muted);
+}
+
+.border-footer {
+  border-color: var(--color-footer-border);
+}
+
+/* Interactive States */
+.footer-link {
+  color: var(--color-footer-muted);
+  transition:
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.footer-link:hover {
+  color: var(--color-primary);
+}
+
+.social-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-footer-muted);
+  transition: all 0.3s ease;
+}
+
+.social-icon-btn:hover {
+  background-color: var(--color-primary);
+}
+
+.bg-card {
+  background-color: var(--color-card-bg);
+}
+.border-main {
+  border-color: var(--color-border);
+}
+.bg-skeleton {
+  background-color: var(--color-skeleton);
+}
+
 /* Smooth theme transition */
 body {
-  transition: background-color 0.3s ease, color 0.3s ease;
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
 }

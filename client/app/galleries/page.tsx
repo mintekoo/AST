@@ -4,12 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { fetchGalleries, API_BASE_URL } from "@/lib/api";
 import type { Gallery } from "@/lib/types";
+import Pagination from "@/components/ui/Pagination";
 
 export default async function GalleriesPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const sp = await searchParams;
     const page = Number(sp?.page ?? "1");
     const resp = await fetchGalleries({ page });
     const galleries: Gallery[] = resp.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -40,6 +42,7 @@ export default async function GalleriesPage({ searchParams }: { searchParams: Pr
                         </Link>
                     ))}
                 </div>
+                <Pagination meta={meta} basePath="/galleries" />
             </Container>
         </main>
     );

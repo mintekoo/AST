@@ -150,7 +150,7 @@ export default function Navbar() {
   return (
     <header
       ref={navRef}
-      className="fixed top-0 z-50 w-full transition-all flex items-center"
+      className="fixed top-0 z-50 w-full transition-all flex items-center "
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{
@@ -171,7 +171,7 @@ export default function Navbar() {
             className="transition-transform duration-300"
           />
         </Link> */}
-        <div className="flex flex-col items-center leading-tight transition-transform duration-300">
+        <div className="flex flex-col items-center leading-tight transition-transform duration-300 hover:scale-105" ref={logoRef}>
 
           {/* ⭐ AST (EXACT SAME STYLE YOU USED IN BADGE) */}
           <span className="text-2xl font-bold text-primary">

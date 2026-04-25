@@ -5,7 +5,7 @@ import type { Project } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
-
+import Pagination from "@/components/ui/Pagination";
 export default async function ProjectsPage(props: {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
@@ -14,6 +14,7 @@ export default async function ProjectsPage(props: {
 
     const resp = await fetchProjects({ page });
     const data = resp?.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -64,6 +65,10 @@ export default async function ProjectsPage(props: {
                         );
                     })}
                 </div>
+
+
+                {/* Pagination */}
+                <Pagination meta={meta} basePath="/projects" />
             </Container>
         </main>
     );

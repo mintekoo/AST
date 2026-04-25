@@ -6,6 +6,7 @@ import type { Service } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import Pagination from "@/components/ui/Pagination";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -21,7 +22,7 @@ export default async function ServicesPage(props: {
     const page = getPageParam(sp, "page");
     const resp = await fetchServices({ page });
     const data = resp?.data ?? [];
-
+    const meta = resp?.meta;
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
             <Container className="py-12 sm:py-16 lg:py-20">
@@ -71,6 +72,7 @@ export default async function ServicesPage(props: {
                         );
                     })}
                 </div>
+                <Pagination meta={meta} basePath="/services" />
             </Container>
         </main>
     );

@@ -1,4 +1,5 @@
 import Container from "@/components/ui/Container";
+import Pagination from "@/components/ui/Pagination";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fetchFAQs } from "@/lib/api";
 import type { FAQ } from "@/lib/types";
@@ -8,9 +9,9 @@ export default async function FAQPage(props: {
 }) {
     const sp = await props.searchParams;
     const page = Number(Array.isArray(sp?.page) ? sp.page[0] : sp?.page || 1);
-
     const resp = await fetchFAQs({ page });
     const data = resp?.data ?? [];
+    const meta = resp?.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -36,6 +37,8 @@ export default async function FAQPage(props: {
                         </details>
                     ))}
                 </div>
+                {/* Pagination */}
+                <Pagination meta={meta} basePath="/faqs" />
             </Container>
         </main>
     );

@@ -76,6 +76,7 @@ export type AppLocation = {
   phone: string[];
   email: string[];
   web: string[];
+  workingHours: string[];
 
   latitude: string;
   longitude: string;

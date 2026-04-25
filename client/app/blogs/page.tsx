@@ -7,6 +7,7 @@ import type { Blog } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
+import Pagination from "@/components/ui/Pagination";
 
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
@@ -23,6 +24,7 @@ export default async function BlogsPage(props: {
   const page = getPageParam(sp, "page");
   const resp = await fetchBlogs({ page });
   const data = resp?.data ?? [];
+  const meta = resp?.meta;
 
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -86,6 +88,8 @@ export default async function BlogsPage(props: {
             <p className="text-center text-gray-500">No blogs found.</p>
           )}
         </div>
+
+        <Pagination meta={meta} basePath="/blogs" />
 
       </Container>
     </main>
