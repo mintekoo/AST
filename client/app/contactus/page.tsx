@@ -166,16 +166,32 @@ export default async function ContactPage() {
   );
 }
 
-function ContactInfoItem({ icon, title, detail }: { icon: React.ReactNode; title: string; detail: React.ReactNode; }) {
+function ContactInfoItem({
+  icon,
+  title,
+  detail,
+}: {
+  icon: React.ReactNode;
+  title: string;
+  detail: React.ReactNode;
+}) {
   return (
     <div className="flex items-center gap-5 p-6 rounded-2xl bg-card border border-main hover:border-primary/40 transition-all duration-300 group">
+
       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
         {icon}
       </div>
+
       <div>
-        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary opacity-70">{title}</p>
-        <p className="text-base font-bold mt-0.5">{detail}</p>
+        <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary opacity-70">
+          {title}
+        </p>
+
+        <div className="text-base font-bold mt-0.5">
+          {detail}
+        </div>
       </div>
+
     </div>
   );
 }

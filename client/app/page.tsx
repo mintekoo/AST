@@ -1,5 +1,4 @@
 // app/page.tsx
-// import Hero from "@/components/sections/Hero";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";

@@ -85,9 +85,14 @@ export default async function SocialsPage() {
                                 </div>
 
                                 {/* Background Watermark */}
-                                <span className="absolute bottom-4 right-6 text-[44px] font-black text-foreground/[0.03] dark:text-white/[0.03] pointer-events-none select-none uppercase tracking-tighter transition-all duration-500 group-hover:scale-110 group-hover:text-primary/5">
+                                {/* <span className="absolute bottom-4 right-6 text-[44px] font-black text-foreground/[0.03] dark:text-white/[0.03] pointer-events-none select-none uppercase tracking-tighter transition-all duration-500 group-hover:scale-110 group-hover:text-primary/5">
+                                    {s.platform.slice(0, 3)}
+                                </span> */}
+                                {/* Background Watermark */}
+                                <span className="absolute bottom-4 right-6 text-[44px] font-black text-foreground/[0.03] dark:text-foreground/[0.03] pointer-events-none select-none uppercase tracking-tighter transition-all duration-500 group-hover:scale-110 group-hover:text-primary/5">
                                     {s.platform.slice(0, 3)}
                                 </span>
+                                
                             </Link>
                         );
                     })}

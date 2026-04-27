@@ -2,16 +2,10 @@
 import Image from "next/image";
 import Link from "next/link";
 import Button from "../ui/Button";
+import type { About } from "@/lib/types";
 
-export type AboutCardType = {
-    id: string;
-    title: string;
-    description: string;
-    imageUrl?: string | null;
-    createdAt?: string;
-};
 
-export default function AboutCard({ about }: { about: AboutCardType }) {
+export default function AboutCard({ about }: { about: About }) {
     return (
         <Link
             href={`/abouts/${about.id}`}
@@ -19,9 +13,9 @@ export default function AboutCard({ about }: { about: AboutCardType }) {
         >
             {/* Image */}
             <div className="relative aspect-video overflow-hidden rounded-t-2xl bg-muted/10">
-                {about.imageUrl ? (
+                {about.image ? (
                     <Image
-                        src={about.imageUrl}
+                        src={about.image}
                         alt={about.title}
                         fill
                         unoptimized

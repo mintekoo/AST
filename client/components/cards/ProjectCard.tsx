@@ -3,15 +3,14 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
+import type { Project } from "@/lib/types";
+import { API_BASE_URL } from "@/lib/api";
 
-export type ProjectCardType = {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-};
+export default function ProjectCard({ project }: { project: Project }) {
+  const imageUrl = project.image
+    ? `${API_BASE_URL}/${project.image}`
+    : "/placeholder.png";
 
-export default function ProjectCard({ project }: { project: ProjectCardType }) {
   return (
     <article
       className="group rounded-2xl shadow-sm ring-1 transition-all hover:-translate-y-0.5 hover:shadow-md"
@@ -23,7 +22,7 @@ export default function ProjectCard({ project }: { project: ProjectCardType }) {
       {/* Image */}
       <div className="relative aspect-[4/3] overflow-hidden rounded-t-2xl">
         <Image
-          src={project.imageUrl}
+          src={imageUrl}
           alt={project.title}
           fill
           unoptimized
@@ -44,7 +43,7 @@ export default function ProjectCard({ project }: { project: ProjectCardType }) {
           className="text-sm line-clamp-3"
           style={{ color: "var(--color-muted)" }}
         >
-          {project.description}
+          {project.content}
         </p>
 
         <div className="pt-2">

@@ -1,16 +1,39 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { fetchLocations } from "@/lib/api";
+import Loader from "@/components/ui/Loader";
+
 import {
     MapPin,
     Phone,
     Mail,
     Globe,
-    Facebook,
-    Linkedin,
+    Clock,
 } from "lucide-react";
+import { AppLocation } from "@/lib/types";
 
 export default function Contact() {
+    const [locations, setLocations] = useState<AppLocation[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        async function load() {
+            try {
+                const resp = await fetchLocations();
+                setLocations(resp?.data ?? []);
+            } finally {
+                setLoading(false);
+            }
+        }
+
+        load();
+    }, []);
+
+    if (loading) {
+        return <Loader />;
+    }
+
     return (
         <section className="py-20 bg-background">
             <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -25,77 +48,116 @@ export default function Contact() {
                     </p>
                 </div>
 
-                {/* Company Name */}
-                <div className="text-center mb-12">
-                    <p className="text-xl font-semibold text-foreground leading-relaxed">
-                        Adinas Transport and Car Rental Service <br />
-                        <span className="text-lg text-muted">
-                            አዲናስ ትራንስፖርትና የመኪና ኪራይ
-                        </span>
-                    </p>
-                </div>
+                {locations.map((loc) => (
+                    <div
+                        key={loc.id}
+                        className="grid grid-cols-1 md:grid-cols-2 gap-12 mb-16"
+                    >
+                        {/* LEFT: Info */}
+                        <div className="space-y-6 text-bold">
 
-                {/* Grid Layout */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            {/* Address */}
+                            <InfoItem
+                                icon={<MapPin className="w-6 h-6 text-primary" />}
+                                text={
+                                    <>
+                                        <strong>{loc.name}</strong>
+                                        <br />
+                                        Lat: {loc.latitude}, Lng: {loc.longitude}
+                                    </>
+                                }
+                            />
 
-                    {/* Contact Info */}
-                    <div className="space-y-8">
-                        <InfoItem
-                            icon={<MapPin className="w-6 h-6 text-primary" />}
-                            text={
-                                <>
-                                    <strong>Office:</strong> Pushkin Square, Addis Ababa, Ethiopia
-                                </>
-                            }
-                        />
-                        <InfoItem
-                            icon={<Phone className="w-6 h-6 text-primary" />}
-                            text={
-                                <>
-                                    +251 911 510313 <br />
-                                    +251 977 777717 <br />
-                                    +251 911 323333
-                                </>
-                            }
-                        />
-                        <InfoItem
-                            icon={<Mail className="w-6 h-6 text-primary" />}
-                            text={
-                                <>
-                                    adinascarrent@gmail.com <br />
-                                    soliyano10@gmail.com
-                                </>
-                            }
-                        />
-                        <InfoItem
-                            icon={<Globe className="w-6 h-6 text-primary" />}
-                            text="www.adinascarrent.com"
-                        />
+                            {/* Phones */}
+                            {loc.phone?.length > 0 && (
+                                <InfoItem
+                                    icon={<Phone className="w-6 h-6 text-primary" />}
+                                    text={
+                                        <>
+                                            {loc.phone.map((p, i) => (
+                                                <div key={i}>{p}</div>
+                                            ))}
+                                        </>
+                                    }
+                                />
+                            )}
 
-                        {/* Social Icons */}
-                        <div className="flex items-center gap-6 pt-4">
-                            <SocialIcon href="#" Icon={Facebook} />
-                            <SocialIcon href="#" Icon={Linkedin} />
+                            {/* Emails */}
+                            {loc.email?.length > 0 && (
+                                <InfoItem
+                                    icon={<Mail className="w-6 h-6 text-primary" />}
+                                    text={
+                                        <>
+                                            {loc.email.map((e, i) => (
+                                                <div key={i}>{e}</div>
+                                            ))}
+                                        </>
+                                    }
+                                />
+                            )}
+
+                            {/* Websites */}
+                            {loc.web?.length > 0 && (
+                                <InfoItem
+                                    icon={<Globe className="w-6 h-6 text-primary" />}
+                                    text={
+                                        <>
+                                            {loc.web.map((w, i) => (
+                                                <a
+                                                    key={i}
+                                                    href={`https://${w}`}
+                                                    target="_blank"
+                                                    className="block hover:underline"
+                                                >
+                                                    {w}
+                                                </a>
+                                            ))}
+                                        </>
+                                    }
+                                />
+                            )}
+
+                            {/* Working Hours */}
+                            {loc.workingHours && (
+                                <InfoItem
+                                    icon={<Clock className="w-6 h-6 text-primary" />}
+                                    text={
+                                        <div className="space-y-1 text-sm">
+                                            {Object.entries(loc.workingHours).map(([day, hours]) => (
+                                                <div key={day} className="flex justify-between gap-4">
+                                                    <span className="capitalize text-foreground/70">
+                                                        {day}
+                                                    </span>
+                                                    <span className="font-medium text-foreground">
+                                                        {hours as string}
+                                                    </span>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    }
+                                />
+                            )}
+
+
                         </div>
+
+                        {/* RIGHT: Google Map */}
+                        <div className="w-full h-[600px] rounded-xl overflow-hidden shadow-xl border border-muted">
+                            <iframe
+                                src={`https://www.google.com/maps?q=${loc.latitude},${loc.longitude}&z=15&output=embed`}
+                                width="100%"
+                                height="100%"
+                                loading="lazy"
+                                allowFullScreen
+                            />
+                        </div>
+                        {/* Footer */}
+                        <p className="col-span-full block  text-center text-muted italic text-lg">
+                            {loc.description}
+                        </p>
                     </div>
 
-                    {/* Google Map */}
-                    <div className="w-full h-110 rounded-xl overflow-hidden shadow-xl border border-muted transition-transform hover:scale-[1.01]">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3914.604213785507!2d38.757!3d9.010!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x164b85d88495edfd%3A0x8a5b50a39cba1c1!2sPushkin%20Square%2C%20Addis%20Ababa!5e0!3m2!1sen!2set!4v1700000000000"
-                            width="100%"
-                            height="100%"
-                            loading="lazy"
-                            allowFullScreen
-                            referrerPolicy="no-referrer-when-downgrade"
-                        />
-                    </div>
-                </div>
-
-                {/* Footer */}
-                <p className="text-center text-muted mt-14 italic text-lg">
-                    Abyssinia Softwareal – Your trusted partner in safe, reliable, and efficient transport solutions.
-                </p>
+                ))}
             </div>
         </section>
     );
@@ -107,18 +169,11 @@ function InfoItem({ icon, text }: { icon: React.ReactNode; text: React.ReactNode
     return (
         <div className="flex items-start gap-4 p-4 rounded-xl bg-background border border-muted shadow-sm hover:shadow-md transition-all">
             <span className="mt-1">{icon}</span>
-            <p className="text-foreground/80 text-lg leading-relaxed">{text}</p>
-        </div>
-    );
-}
 
-function SocialIcon({ href, Icon }: { href: string; Icon: any }) {
-    return (
-        <a
-            href={href}
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-muted text-foreground/70 hover:text-background hover:bg-primary transition"
-        >
-            <Icon className="w-5 h-5" />
-        </a>
+            {/* CHANGE THIS */}
+            <div className="text-foreground/80 text-lg leading-relaxed">
+                {text}
+            </div>
+        </div>
     );
 }

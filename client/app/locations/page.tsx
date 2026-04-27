@@ -52,7 +52,7 @@ export default async function LocationsPage() {
                   text={
                     <>
                       {loc.phone.map((p, i) => (
-                        <div key={i}>+251 {p}</div>
+                        <div key={i}>{p}</div>
                       ))}
                     </>
                   }
@@ -129,9 +129,10 @@ export default async function LocationsPage() {
               />
             </div>
 
-            <span className="col-span-full block mt-4 text-center">
-              <p className="text-muted">{loc.description}</p>
-            </span>
+            {/* Footer */}
+            <p className="col-span-full block  text-center text-muted italic text-lg">
+              {loc.description}
+            </p>
           </div>
         ))}
       </div>
@@ -142,9 +143,13 @@ export default async function LocationsPage() {
 /* Helper */
 function InfoItem({ icon, text }: { icon: React.ReactNode; text: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl border border-muted shadow-sm">
-      {icon}
-      <div className="text-foreground/80">{text}</div>
+    <div className="flex items-start gap-4 p-4 rounded-xl bg-background border border-muted shadow-sm hover:shadow-md transition-all">
+      <span className="mt-1">{icon}</span>
+
+      {/* CHANGE THIS */}
+      <div className="text-foreground/80 text-lg leading-relaxed">
+        {text}
+      </div>
     </div>
   );
 }

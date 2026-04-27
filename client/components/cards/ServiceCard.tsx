@@ -56,7 +56,7 @@ export default function ServiceCard({ service }: { service: Service }) {
                     </p>
                 </div>
 
-                <div className="mt-3">
+                <div className="mt-3 flex justify-center">
                     <Button size="sm" variant="primary">
                         View Details
                     </Button>
