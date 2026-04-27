@@ -1,13 +1,16 @@
-// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/sections/Hero";
-import { ThemeProvider } from "next-themes";
-import { Analytics } from "@vercel/analytics/next"
 import ScrollToTop from "./ScrollToTop";
+
+import { ThemeProvider } from "next-themes";
+import { Analytics } from "@vercel/analytics/next";
+
+import { siteInfo } from "@/lib/site";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,43 +22,52 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+/* =========================
+   ROOT METADATA (CLEAN + DYNAMIC)
+========================= */
 export const metadata: Metadata = {
-  metadataBase: new URL("https://api.adinascarrent.com"),
+  metadataBase: new URL(siteInfo.baseUrl),
+
   title: {
-    default: "Abyssinia Software ",
-    template: "%s | Abyssinia Software",
+    default: `${siteInfo.name} | Software Development Company in Ethiopia`,
+    template: `%s | ${siteInfo.shortName}`,
   },
-  description:
-    "Discover premium cars with transparent pricing, expert insights, and a modern shopping experience.",
+
+  description: siteInfo.description,
+
+  keywords: [
+    ...siteInfo.baseKeywords,
+    ...siteInfo.seoBoostKeywords,
+  ],
+
   openGraph: {
-    title: "Abyssinia Software ",
-    description:
-      "Discover premium cars with transparent pricing, expert insights, and a modern shopping experience.",
-    url: "https://api.adinascarrent.com/",
-    siteName: "Abyssinia Software",
-    images: [{ url: "/next.svg", width: 1200, height: 630, alt: "Abyssinia Software" }],
+    title: `${siteInfo.name} | Software Company in Ethiopia`,
+    description: siteInfo.description,
+    url: siteInfo.baseUrl,
+    siteName: siteInfo.shortName,
+    images: [
+      {
+        url: "/og-image.png",
+        width: 1200,
+        height: 630,
+        alt: siteInfo.name,
+      },
+    ],
     locale: "en_US",
     type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Abyssinia Software ",
-    description:
-      "Discover premium cars with transparent pricing, expert insights, and a modern shopping experience.",
-    images: ["/next.svg"],
+    title: `${siteInfo.name} | Software Development Ethiopia`,
+    description: siteInfo.description,
+    images: ["/og-image.png"],
   },
+
   robots: {
     index: true,
     follow: true,
   },
-  keywords: [
-    "cars",
-    "auto shop",
-    "buy car",
-    "electric",
-    "SUV",
-    "dealership",
-  ],
 };
 
 export default function RootLayout({
@@ -74,7 +86,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <ScrollToTop /> 
+          <ScrollToTop />
           <Hero />
           {children}
           <Analytics />

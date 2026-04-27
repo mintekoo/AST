@@ -1,3 +1,4 @@
+// app/projects/page.tsx
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { fetchProjects, API_BASE_URL } from "@/lib/api";
