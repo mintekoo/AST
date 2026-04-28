@@ -1,3 +1,4 @@
+// src/controllers/blogs.controller.js
 import { blogService } from '#services/blogs.service.js';
 import { asyncHandler } from '#errors/errorHandler.js';
 import { deleteFile } from '#utils/deleteFile.js';

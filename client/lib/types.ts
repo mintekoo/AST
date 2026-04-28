@@ -15,9 +15,11 @@ export type ApiListResponse<T> = {
 // Blog
 export type Blog = {
   id: number;
+  categoryId?: number | null;
   title: string;
   description: string;
   image?: string | null;
+  category?: Category;
   createdAt: string;
   updatedAt: string;
 };
@@ -34,6 +36,17 @@ export type About = {
   createdAt?: string;
   updatedAt?: string;
 };
+
+export type CategoryType = "project" | "service" | "blog";
+
+export interface Category {
+  id: number;
+  title: string;
+  image?: string | null;
+  typeIs?: CategoryType | null;
+  createdAt?: string;
+  updatedAt?: string;
+}
 
 export type Certification = {
   id: number;
@@ -147,9 +160,11 @@ export type Partner = {
 
 export type Project = {
   id: number;
+  categoryId?: number | null;
   title: string;
   content: string;
   image?: string | null;
+  category?: Category;
   createdAt: string;
   updatedAt: string;
 };
@@ -160,14 +175,6 @@ export type User = {
   firstName: string;
   lastName: string;
   email?: string | null;
-};
-
-// Category type
-export type Category = {
-  id: number;
-  name: string;
-  description?: string | null;
-  image?: string | null;
 };
 
 // Product type

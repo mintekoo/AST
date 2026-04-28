@@ -1,3 +1,4 @@
+// src/validations/blogs.validation.js
 import Joi from 'joi';
 
 export const createBlog = Joi.object({

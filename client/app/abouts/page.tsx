@@ -6,6 +6,7 @@ import type { About } from "@/lib/types";
 import Image from "next/image";
 import Excellence from "@/app/staticsPages/Excellence";
 import PartnersSection from "@/components/sections/PartnersSection";
+import LetterGlitch from "@/components/ui/LetterGlitch";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -26,7 +27,22 @@ export default async function AboutPage(props: {
     const partners = respartners?.data ?? [];
 
     return (
-        <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <main className="relative  text-foreground overflow-hidden">
+
+            {/* 🎨 Letter Glitch Background (About only) */}
+            <div className="absolute inset-0 -z-10 pointer-events-none opacity-30">
+                <LetterGlitch
+                    glitchSpeed={80}
+                    smooth={true}
+                    outerVignette={true}
+                    centerVignette={false}
+                    glitchColors={["#089d25", "#22c55e", "#0ea5e9"]}
+                />
+            </div>
+
+            {/* 🌫 Overlay for readability */}
+            <div className="absolute inset-0 -z-10 bg-background/80" />
+
             <Container className="py-12 sm:py-16 lg:py-20">
                 <SectionHeader
                     title="About Us"
@@ -35,12 +51,17 @@ export default async function AboutPage(props: {
 
                 <div className="space-y-16">
                     {data.map((a: About) => {
-                        const fullImage = a.image ? `${API_BASE_URL}/${a.image}` : "/window.svg";
+                        const fullImage = a.image
+                            ? `${API_BASE_URL}/${a.image}`
+                            : "/window.svg";
 
                         return (
-                            <section key={a.id} className="flex flex-col lg:flex-row lg:items-center gap-8">
+                            <section
+                                key={a.id}
+                                className="flex flex-col lg:flex-row lg:items-center gap-8"
+                            >
                                 {/* Image */}
-                                <div className="relative w-full lg:w-1/2 h-64 lg:h-96 flex-shrink-0 overflow-hidden rounded-xl">
+                                <div className="relative w-full lg:w-1/2 h-64 lg:h-96 overflow-hidden rounded-xl">
                                     <Image
                                         src={fullImage}
                                         alt={a.title}
@@ -53,35 +74,36 @@ export default async function AboutPage(props: {
 
                                 {/* Content */}
                                 <div className="lg:w-1/2 space-y-4">
-                                    {/* <time className="text-sm text-zinc-500 block">
-                                        {a.createdAt ? new Date(a.createdAt).toLocaleDateString() : ""}
-                                    </time> */}
-
                                     <h2 className="text-3xl font-bold">{a.title}</h2>
 
-                                    {a.description && <p className="text-lg ">{a.description}</p>}
-                                    {a.mission && <p className="text-lg "><strong>Mission:</strong> {a.mission}</p>}
-                                    {a.vision && <p className="text-lg "><strong>Vision:</strong> {a.vision}</p>}
-                                    {a.values && <p className="text-lg "><strong>Values:</strong> {a.values}</p>}
-
-                                    {/* Optional CTA */}
-                                    {/* <a
-                                        href={`/abouts/${a.id}`}
-                                        className="inline-block mt-4 text-sm font-medium text-blue-600 hover:underline"
-                                    >
-                                        Learn More &rarr;
-                                    </a> */}
+                                    {a.description && <p className="text-lg">{a.description}</p>}
+                                    {a.mission && (
+                                        <p className="text-lg">
+                                            <strong>Mission:</strong> {a.mission}
+                                        </p>
+                                    )}
+                                    {a.vision && (
+                                        <p className="text-lg">
+                                            <strong>Vision:</strong> {a.vision}
+                                        </p>
+                                    )}
+                                    {a.values && (
+                                        <p className="text-lg">
+                                            <strong>Values:</strong> {a.values}
+                                        </p>
+                                    )}
                                 </div>
                             </section>
                         );
                     })}
                 </div>
 
-                {/* Excellence Section */}
+                {/* Excellence */}
                 <div className="mt-20">
                     <Excellence />
                 </div>
-                {/* Partners Section */}
+
+                {/* Partners */}
                 <div className="mt-20">
                     <PartnersSection partners={partners} />
                 </div>

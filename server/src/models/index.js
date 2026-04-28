@@ -5,6 +5,7 @@ import { sequelize } from '#config/database.js';
 // Import all models
 import Admin from './admin.model.js';
 import About from './about.model.js';
+import Category from './category.model.js';
 import Certification from './certification.model.js';
 import FAQ from './faq.model.js';
 import Location from './location.model.js';
@@ -17,6 +18,34 @@ import Gallery from './gallery.model.js';
 import Link from './link.model.js';
 import Project from './project.model.js';
 import Term from './term.model.js';
+
+Category.hasMany(Project, {
+  foreignKey: 'categoryId',
+  as: 'projects',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
+
+Project.belongsTo(Category, {
+  foreignKey: 'categoryId',
+  as: 'category',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
+
+Category.hasMany(Blog, {
+  foreignKey: 'categoryId',
+  as: 'blogs',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
+
+Blog.belongsTo(Category, {
+  foreignKey: 'categoryId',
+  as: 'category',
+  onDelete: 'SET NULL',
+  onUpdate: 'CASCADE',
+});
 
 /**
  * ========================
@@ -33,6 +62,9 @@ export const syncDB = async () => {
 
     await About.sync({ alter: false });
     logger.info('📄 About table synced successfully!');
+
+    await Category.sync({ alter: false });
+    logger.info('🏷️ Category table synced successfully!');
 
     await Certification.sync({ alter: false });
     logger.info('🏆 Certification table synced successfully!');
@@ -86,6 +118,7 @@ export {
   sequelize,
   Admin,
   About,
+  Category,
   Certification,
   FAQ,
   Location,

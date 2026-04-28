@@ -22,6 +22,7 @@ import servicesRouter from './services.routes.js';
 import termsRouter from './terms.routes.js';
 import testimonialsRouter from './testimonials.routes.js';
 import galleriesRouter from './galleries.routes.js';
+import categoriesRouter from './categories.routes.js';
 
 const router = express.Router();
 
@@ -57,5 +58,6 @@ router.use('/services', servicesRouter);
 router.use('/socials', linksRouter);
 router.use('/terms', termsRouter);
 router.use('/testimonials', testimonialsRouter);
+router.use('/categories', categoriesRouter);
 
 export default router;

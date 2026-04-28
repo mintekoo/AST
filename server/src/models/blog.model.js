@@ -10,14 +10,26 @@ const Blog = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'categories',
+        key: 'id',
+      },
+    },
+
     title: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     description: {
       type: DataTypes.TEXT,
       allowNull: true,
     },
+
     image: {
       type: DataTypes.STRING,
       allowNull: true,
@@ -26,6 +38,15 @@ const Blog = sequelize.define(
   {
     tableName: 'blogs',
     timestamps: true,
+
+    indexes: [
+      {
+        fields: ['categoryId'],
+      },
+      {
+        fields: ['createdAt'],
+      },
+    ],
   }
 );
 

@@ -10,6 +10,14 @@ const Project = sequelize.define(
       primaryKey: true,
       autoIncrement: true,
     },
+    categoryId: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+      references: {
+        model: 'categories',
+        key: 'id',
+      }
+    },
     title: {
       type: DataTypes.STRING,
       allowNull: false,
@@ -26,6 +34,14 @@ const Project = sequelize.define(
   {
     tableName: 'projects',
     timestamps: true,
+    indexes: [
+      {
+        fields: ['categoryId'],
+      },
+      {
+        fields: ['createdAt'],
+      },
+    ],
   }
 );
 

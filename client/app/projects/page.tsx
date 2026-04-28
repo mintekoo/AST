@@ -1,21 +1,44 @@
-// app/projects/page.tsx
 import Container from "@/components/ui/Container";
 import SectionHeader from "@/components/ui/SectionHeader";
-import { fetchProjects, API_BASE_URL } from "@/lib/api";
+import CategoryFilter from "@/components/filters/CategoryFilter";
+import { fetchProjects, fetchCategories, API_BASE_URL } from "@/lib/api";
 import type { Project } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
-export default async function ProjectsPage(props: {
-    searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+
+/* ✅ FIX: proper type instead of any */
+type SearchParams = Promise<{
+    page?: string | string[];
+    categoryId?: string | string[];
+}>;
+
+export default async function ProjectsPage({
+    searchParams,
+}: {
+    searchParams: SearchParams;
 }) {
-    const sp = await props.searchParams;
+    /* ✅ FIX: await params correctly */
+    const sp = await searchParams;
+
+    /* ✅ FIX: safe parsing */
     const page = Number(Array.isArray(sp?.page) ? sp.page[0] : sp?.page || 1);
 
-    const resp = await fetchProjects({ page });
-    const data = resp?.data ?? [];
-    const meta = resp?.meta;
+    const categoryIdRaw = Array.isArray(sp?.categoryId)
+        ? sp.categoryId[0]
+        : sp?.categoryId;
+
+    const categoryId = categoryIdRaw ? Number(categoryIdRaw) : undefined;
+
+    const [catsRes, projRes] = await Promise.all([
+        fetchCategories({ typeIs: "project", perPage: 1000, }),
+        fetchProjects({ page, categoryId }),
+    ]);
+
+    const categories = catsRes.data ?? [];
+    const data = projRes.data ?? [];
+    const meta = projRes.meta;
 
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
@@ -24,6 +47,19 @@ export default async function ProjectsPage(props: {
                     title="Our Projects"
                     subtitle="Showcasing our completed and ongoing work."
                 />
+
+
+                {/* FILTER UI */}
+                <div className="mb-10 rounded-2xl border border-border p-4 sm:p-6 bg-card-background dark:bg-card-background-dark">
+                    <h2 className="text-sm font-semibold mb-1">
+                        Filter by Category
+                    </h2>
+                    <p className="text-xs text-muted-foreground mb-4">
+                        Explore blogs by category
+                    </p>
+
+                    <CategoryFilter categories={categories} />
+                </div>
 
                 <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     {data.map((p: Project) => {
@@ -67,8 +103,6 @@ export default async function ProjectsPage(props: {
                     })}
                 </div>
 
-
-                {/* Pagination */}
                 <Pagination meta={meta} basePath="/projects" />
             </Container>
         </main>

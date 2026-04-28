@@ -28,7 +28,16 @@ export const getProjectById = async (id) => {
 export const listProjects = async (req) => {
   const { page, limit, offset } = getPaginationParams(req);
 
+  const { categoryId } = req.query;
+
+  const where = {};
+  // 🔥 filter by category
+  if (categoryId) {
+    where.categoryId = categoryId;
+  }
+
   const { rows, count } = await Project.findAndCountAll({
+    where,
     limit,
     offset,
     order: [['createdAt', 'DESC']],

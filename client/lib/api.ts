@@ -2,11 +2,8 @@
 export const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 export const API_PUBLIC_URL = process.env.NEXT_PUBLIC_SITE_URL || "";
 
-
 import type {
   Meta,
-  Product,
-  Booking,
   Testimonial,
   Blog,
   Category,
@@ -57,48 +54,51 @@ export function buildQuery(
   return q ? `?${q}` : "";
 }
 
-// Products
-export async function fetchProducts(
-  query: { page?: number; categoryId?: string; perPage?: number } = {},
+export async function fetchCategories(
+  query: {
+    page?: number;
+    typeIs?: string;
+    perPage?: number;
+  } = {},
 ) {
   const q = buildQuery({
     page: query.page,
-    categoryId: query.categoryId,
+    typeIs: query.typeIs,
     perPage: query.perPage,
   });
-  return request<{ products: Product[]; meta: Meta }>(`/api/products${q}`, {
+
+  return request<{
+    success: boolean;
+    data: Category[];
+    meta: Meta;
+  }>(`/api/categories${q}`, {
     next: { revalidate: 60 },
   });
 }
 
-export async function fetchProduct(id: string) {
-  return request<Product>(`/api/products/${id}`, { next: { revalidate: 60 } });
+export interface CategoryDetailResponse {
+  category: Category;
+  projects: ApiListResponse<Project>;
+  blogs: ApiListResponse<Blog>;
 }
 
-// Bookings
-export async function fetchBookings(
-  query: { page?: number; perPage?: number } = {},
-) {
-  const q = buildQuery({
-    page: query.page,
-    perPage: query.perPage,
-  });
-  return request<{ bookings: Booking[]; meta: Meta }>(`/api/bookings${q}`, {
+export async function fetchCategory(id: string) {
+  return request<{
+    success: boolean;
+    data: CategoryDetailResponse;
+  }>(`/api/categories/${id}`, {
     next: { revalidate: 60 },
   });
-}
-
-export async function fetchBooking(id: string) {
-  return request<Booking>(`/api/bookings/${id}`, { next: { revalidate: 60 } });
 }
 
 // Blogs
 export async function fetchBlogs(
-  query: { page?: number; perPage?: number } = {},
+  query: { page?: number; perPage?: number; categoryId?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
     perPage: query.perPage,
+    categoryId: query.categoryId,
   });
 
   return request<{
@@ -183,7 +183,7 @@ export async function fetchCertification(id: string | number) {
 }
 
 export async function fetchFAQs(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -235,7 +235,7 @@ export async function fetchGallery(id: number | string): Promise<Gallery> {
 }
 
 export async function fetchLocations(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -288,7 +288,7 @@ export async function fetchService(id: string | number) {
 }
 
 export async function fetchSocials(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -337,7 +337,7 @@ export async function fetchTestimonial(id: string) {
 }
 
 export async function fetchTerms(
-  query: { page?: number; perPage?: number } = {}
+  query: { page?: number; perPage?: number } = {},
 ) {
   const q = buildQuery({
     page: query.page,
@@ -387,11 +387,16 @@ export async function fetchPartner(id: string | number) {
 }
 
 export async function fetchProjects(
-  query: { page?: number; perPage?: number } = {},
+  query: {
+    page?: number;
+    perPage?: number;
+    categoryId?: number;
+  } = {},
 ) {
   const q = buildQuery({
     page: query.page,
     perPage: query.perPage,
+    categoryId: query.categoryId,
   });
 
   return request<{
@@ -410,29 +415,4 @@ export async function fetchProject(id: string | number) {
   }>(`/api/projects/${id}`, {
     next: { revalidate: 300 },
   });
-}
-
-// Categories
-export async function fetchCategories() {
-  return request<{ categories: Category[]; meta: Meta }>(`/api/categories`, {
-    next: { revalidate: 300 },
-  });
-}
-
-// products by category ID
-export async function fetchProductsByCategory(
-  categoryId: string | number,
-  query: { page?: number; perPage?: number } = {},
-) {
-  const id = categoryId.toString();
-  const q = buildQuery({
-    page: query.page,
-    perPage: query.perPage,
-  });
-  return request<{ products: Product[]; meta: Meta }>(
-    `/api/products/category/${id}${q}`,
-    {
-      next: { revalidate: 60 },
-    },
-  );
 }

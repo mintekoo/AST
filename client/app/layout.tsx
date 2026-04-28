@@ -1,5 +1,7 @@
+// app/layout.tsx
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import LineWaves from "@/components/ui/LineWaves";
 import "./globals.css";
 
 import Navbar from "@/components/layout/Navbar";
@@ -78,13 +80,27 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
-
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           enableSystem
           disableTransitionOnChange
         >
+          {/* 🔥 Background Layer */}
+          <div className="fixed inset-0 -z-10 pointer-events-none">
+            <LineWaves
+              speed={0.2}
+              innerLineCount={20}
+              outerLineCount={24}
+              warpIntensity={0.6}
+              brightness={0.12}
+              color1="#089d25"
+              color2="#089d25"
+              color3="#089d25"
+            />
+          </div>
+
+          {/* App Content */}
           <Navbar />
           <ScrollToTop />
           <Hero />

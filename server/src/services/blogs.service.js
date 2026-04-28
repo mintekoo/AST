@@ -1,3 +1,4 @@
+// src/services/blogs.service.js
 import { Blog } from '#models/index.js';
 import { AppError, ERR } from '#errors/errorHandler.js';
 import { getPaginationParams, getPaginationMeta } from '#utils/pagination.js';
@@ -39,11 +40,16 @@ export const blogService = {
   // ✅ List blogs with pagination + search
   async list(req) {
     const { page, limit, offset } = getPaginationParams(req);
-    const { search } = req.query;
+    const { search, categoryId } = req.query;
 
     const where = {};
 
-    // 🔍 Search by title or description
+    // 🔥 category filter
+    if (categoryId) {
+      where.categoryId = categoryId;
+    }
+
+    // 🔍 search filter
     if (search) {
       where[Op.or] = [
         { title: { [Op.like]: `%${search}%` } },
@@ -58,11 +64,9 @@ export const blogService = {
       order: [['createdAt', 'DESC']],
     });
 
-    const meta = getPaginationMeta(page, limit, count);
-
     return {
       data: rows,
-      meta,
+      meta: getPaginationMeta(page, limit, count),
     };
   },
 
