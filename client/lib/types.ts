@@ -230,3 +230,13 @@ export type CreateBookingInput = {
   totalPrice: number;
   driver?: "yes" | "no";
 };
+
+export type HeroAnimationType = "project" | "service" | "blog" | "simple";
+
+export type HeroSize = "full" | "half" | "compact";
+
+export type HeroAnimationConfig = {
+  type: HeroAnimationType;
+  size?: HeroSize;
+  disableAutoplay?: boolean;
+};

@@ -1,18 +1,23 @@
 // app/layout.tsx
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Inter } from "next/font/google";
 import LineWaves from "@/components/ui/LineWaves";
 import "./globals.css";
 
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import Hero from "@/components/sections/Hero";
+// import Hero from "@/components/sections/Hero";
 import ScrollToTop from "./ScrollToTop";
 
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
 
 import { siteInfo } from "@/lib/site";
+import { cn } from "@/lib/utils";
+
+const geistHeading = Geist({subsets:['latin'],variable:'--font-heading'});
+
+const inter = Inter({subsets:['latin'],variable:'--font-sans'});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -76,7 +81,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable, geistHeading.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
@@ -103,7 +108,7 @@ export default function RootLayout({
           {/* App Content */}
           <Navbar />
           <ScrollToTop />
-          <Hero />
+          {/* <Hero /> */}
           {children}
           <Analytics />
           <Footer />

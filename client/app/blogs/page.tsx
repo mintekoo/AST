@@ -8,6 +8,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Button from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
+import Hero from "@/components/hero/Hero";
 
 /* ✅ TYPES */
 type SearchParams = {
@@ -48,6 +49,8 @@ export default async function BlogsPage({
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
       <Container className="py-12 sm:py-16 lg:py-20">
+
+        <Hero variant="blog" />
 
         <SectionHeader
           title="Latest Articles"

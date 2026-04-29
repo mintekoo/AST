@@ -1,3 +1,4 @@
+import Hero from "@/components/hero/Hero";
 import Container from "@/components/ui/Container";
 import Pagination from "@/components/ui/Pagination";
 import SectionHeader from "@/components/ui/SectionHeader";
@@ -16,6 +17,9 @@ export default async function FAQPage(props: {
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
             <Container className="py-12 sm:py-16 lg:py-20">
+                <Hero
+                    variant="simple"
+                />
                 <SectionHeader
                     title="Frequently Asked Questions"
                     subtitle="Find answers to common questions."

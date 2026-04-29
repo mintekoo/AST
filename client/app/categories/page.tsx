@@ -7,6 +7,8 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import Pagination from "@/components/ui/Pagination";
 import CategoryFilter from "./CategoryFilter";
+import HeroCategory from "@/components/hero/HeroCategory";
+import Hero from "@/components/hero/Hero";
 
 export const dynamic = "force-dynamic";
 
@@ -36,6 +38,10 @@ export default async function CategoriesPage(props: {
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
       <Container className="py-12 sm:py-16 lg:py-20">
+        <HeroCategory />
+        <Hero
+          variant="category"
+        />
         <SectionHeader
           title="Browse Categories"
           subtitle="Explore content by type and purpose."

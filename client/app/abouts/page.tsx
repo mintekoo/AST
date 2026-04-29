@@ -7,6 +7,7 @@ import Image from "next/image";
 import Excellence from "@/app/staticsPages/Excellence";
 import PartnersSection from "@/components/sections/PartnersSection";
 import LetterGlitch from "@/components/ui/LetterGlitch";
+import Hero from "@/components/hero/Hero";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -101,6 +102,13 @@ export default async function AboutPage(props: {
                 {/* Excellence */}
                 <div className="mt-20">
                     <Excellence />
+                </div>
+
+                <div className="mt-20">
+
+                    <Hero
+                        variant="simple"
+                    />
                 </div>
 
                 {/* Partners */}

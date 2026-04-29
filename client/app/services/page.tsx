@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
+import HeroServices from "@/components/hero/HeroServices";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -26,6 +27,7 @@ export default async function ServicesPage(props: {
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
             <Container className="py-12 sm:py-16 lg:py-20">
+                <HeroServices />
                 <SectionHeader
                     title="Our Services"
                     subtitle="Discover the range of professional car rental services we provide."

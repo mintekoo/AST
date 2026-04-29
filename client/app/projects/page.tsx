@@ -7,6 +7,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
+import Hero from "@/components/hero/Hero";
 
 /* ✅ FIX: proper type instead of any */
 type SearchParams = Promise<{
@@ -43,6 +44,9 @@ export default async function ProjectsPage({
     return (
         <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
             <Container className="py-12 sm:py-16 lg:py-20">
+                <Hero
+                    variant="project"
+                />
                 <SectionHeader
                     title="Our Projects"
                     subtitle="Showcasing our completed and ongoing work."

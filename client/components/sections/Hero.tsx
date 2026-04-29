@@ -1,4 +1,5 @@
-import HeroClient from "./HeroClient";
+// components/sections/Hero.tsx
+import HeroClient from "../hero/HeroClient";
 import { fetchProjects } from "@/lib/api";
 
 export default async function Hero() {
