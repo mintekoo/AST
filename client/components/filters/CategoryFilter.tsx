@@ -1,22 +1,19 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import TiltedCard from "@/components/ui/TiltedCard";
 import type { Category } from "@/lib/types";
-import { API_BASE_URL } from "@/lib/api";
-
 
 type Props = {
   categories: Category[];
 };
 
-export default function CategoryCardFilter({ categories }: Props) {
+export default function CategoryFilter({ categories }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
   const selected = searchParams.get("categoryId") || "";
 
-  const handleClick = (value: string) => {
+  const handleChange = (value: string) => {
     const params = new URLSearchParams(searchParams.toString());
 
     if (value) {
@@ -25,71 +22,41 @@ export default function CategoryCardFilter({ categories }: Props) {
       params.delete("categoryId");
     }
 
-    // 🔥 reset page when filtering
     params.delete("page");
 
     router.push(`?${params.toString()}`);
   };
 
   return (
-    <div className="flex gap-6 overflow-x-auto pb-4">
-      {/* ✅ ALL */}
-      <div
-        onClick={() => handleClick("")}
-        className={`cursor-pointer ${
-          selected === "" ? "ring-2 ring-primary" : ""
-        }`}
+    <div className="flex flex-wrap gap-3 mb-6">
+      {/* ALL */}
+      <button
+        onClick={() => handleChange("")}
+        className={`px-4 py-2 rounded-full border transition
+          ${
+            selected === ""
+              ? "bg-primary text-white border-primary"
+              : "bg-transparent text-muted-foreground border-border hover:bg-muted"
+          }`}
       >
-        <TiltedCard
-          imageSrc="/window.svg"
-          captionText="All"
-          containerWidth="180px"
-          containerHeight="180px"
-          imageWidth="180px"
-          imageHeight="180px"
-          scaleOnHover={1.05}
-          rotateAmplitude={10}
-        />
-      </div>
+        All
+      </button>
 
-      {/* ✅ Categories */}
-      {categories.map((c) => {
-        const fullImg = c.image
-          ? `${API_BASE_URL}/${c.image}`
-          : "/window.svg";
-
-        return (
-          <div
-            key={c.id}
-            onClick={() => handleClick(String(c.id))}
-            className={`cursor-pointer ${
+      {/* Categories */}
+      {categories.map((c) => (
+        <button
+          key={c.id}
+          onClick={() => handleChange(String(c.id))}
+          className={`px-4 py-2 rounded-full border transition
+            ${
               selected === String(c.id)
-                ? "ring-2 ring-primary"
-                : ""
+                ? "bg-primary text-white border-primary"
+                : "bg-transparent text-muted-foreground border-border hover:bg-muted"
             }`}
-          >
-            <TiltedCard
-              imageSrc={fullImg}
-              altText={c.title}
-              captionText={c.title}
-              containerWidth="180px"
-              containerHeight="180px"
-              imageWidth="180px"
-              imageHeight="180px"
-              scaleOnHover={1.05}
-              rotateAmplitude={10}
-              displayOverlayContent
-              overlayContent={
-                <div className="w-full h-full flex items-end p-2">
-                  <span className="text-xs font-semibold bg-black/60 text-white px-2 py-1 rounded">
-                    {c.title}
-                  </span>
-                </div>
-              }
-            />
-          </div>
-        );
-      })}
+        >
+          {c.title}
+        </button>
+      ))}
     </div>
   );
 }

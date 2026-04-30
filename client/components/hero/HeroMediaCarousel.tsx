@@ -13,10 +13,24 @@ interface CarouselProps<T extends MediaItem> {
   currentSlide: number;
 }
 
-function getImage(image: unknown): string {
-  if (!image) return "https://picsum.photos/1920/1080"; // Fallback
-  if (typeof image === "string") return image;
-  return "https://picsum.photos/1920/1080";
+/**
+ * Production URL generator
+ * Uses a version query to ensure WebGL texture reloads and 
+ * local logo.png as a safety fallback.
+ */
+function getImageUrl(image: unknown, index: number): string {
+  if (!image || typeof image !== "string") {
+    return "/logo.png";
+  }
+
+  const cleanPath = image.replace(/^\/+/, "");
+  const baseUrl = image.startsWith("http")
+    ? image
+    : `${API_BASE_URL}/${cleanPath}`;
+
+  // Unique versioning forces WebGL components to re-initialize 
+  // correctly even if images are shared across slides.
+  return `${baseUrl}?v=${index}`;
 }
 
 export default function HeroMediaCarousel<T extends MediaItem>({
@@ -24,20 +38,17 @@ export default function HeroMediaCarousel<T extends MediaItem>({
   currentSlide,
 }: CarouselProps<T>) {
   const item = items[currentSlide];
-  const imagePath = getImage(item?.image);
-
-  const url = imagePath?.startsWith('http') 
-    ? imagePath 
-    : `${API_BASE_URL}/${imagePath.replace(/^\/+/, "")}`;
+  const url = getImageUrl(item?.image, currentSlide);
 
   return (
-    <div className="absolute inset-0 w-full h-full">
-      {/* Note: We use the URL as a key here. 
-          This forces the GridDistortion component to re-mount and 
-          re-initialize the WebGL texture when the slide changes.
+    <div className="absolute inset-0 w-full h-full bg-black">
+      {/* 
+          The 'key' is tied to the unique URL version. 
+          This is the standard way to force WebGL/Canvas components 
+          to refresh their internal textures during slide changes.
       */}
       <GridDistortion
-        key={url} 
+        key={url}
         imageSrc={url}
         grid={12}
         mouse={0.2}

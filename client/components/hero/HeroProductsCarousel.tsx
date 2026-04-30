@@ -40,15 +40,15 @@ export default function HeroProductsCarousel({ products, currentSlide }: Carouse
   }, [currentSlide]);
 
   return (
-    <div className="absolute inset-0 w-full h-full overflow-hidden">
+    <div className="absolute inset-x-0 top-0 w-full h-[50vh] overflow-hidden">
       <div
         ref={imageRef}
         className="
-          w-full h-full
-          fade-zoom
-          transition-all duration-600
-          will-change-transform
-        "
+        w-full h-full
+        fade-zoom
+        transition-all duration-600
+        will-change-transform
+      "
       >
         <Image
           src={url}

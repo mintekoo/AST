@@ -1,45 +1,80 @@
-// app/blogs/[id]/page.tsx
 import Container from "@/components/ui/Container";
-import { fetchBlog } from "@/lib/api";
-import { API_BASE_URL } from "@/lib/api";
+import { fetchBlog, fetchBlogs, API_BASE_URL } from "@/lib/api";
 import Image from "next/image";
+import RelatedBlogs from "../RelatedBlogs";
 
-export default async function BlogDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function BlogDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
   const { id } = await params;
-  const resp = await fetchBlog(id);
-  const blog = resp.data;
-  const fullMedia = blog.image ? `${API_BASE_URL}/${blog.image}` : null;
+
+  const blogResp = await fetchBlog(id);
+  const blog = blogResp.data;
+
+  // 🔥 fetch related blogs (simple version)
+  const relatedResp = await fetchBlogs({ page: 1, perPage: 6 });
+  const relatedBlogs = relatedResp.data ?? [];
+
+  const fullMedia = blog.image
+    ? `${API_BASE_URL}/${blog.image}`
+    : null;
+
   const isVideo = fullMedia?.match(/\.(mp4|webm|mkv|ogg)$/i);
 
   return (
-    <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
-      <Container className="py-10 sm:py-14 lg:py-16">
-        <div className="mx-auto max-w-3xl animate-fade-in">
-          {fullMedia && (
-            <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-2xl ring-1 ring-zinc-200 dark:ring-zinc-800">
-              {isVideo ? (
-                <video
-                  src={fullMedia}
-                  controls
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <Image
-                  src={fullMedia}
-                  alt={blog.title}
-                  fill
-                  className="object-cover"
-                  unoptimized
-                />
-              )}
-            </div>
-          )}
+    <main className="bg-background text-foreground">
+      <Container className="py-20 mt-4 lg:py-16">
 
-          <h1 className="text-2xl font-heading font-semibold sm:text-3xl">{blog.title}</h1>
+        {/* 🔥 GRID */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
-          <article className="prose prose-zinc mt-6 max-w-none dark:prose-invert">
-            {blog.description}
-          </article>
+          {/* ================= LEFT ================= */}
+          <div className="lg:col-span-2">
+
+            {fullMedia && (
+              <div className="relative mb-6 aspect-[16/9] overflow-hidden rounded-2xl">
+                {isVideo ? (
+                  <video
+                    src={fullMedia}
+                    controls
+                    className="w-full h-full object-cover"
+                  />
+                ) : (
+                  <Image
+                    src={fullMedia}
+                    alt={blog.title}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                )}
+              </div>
+            )}
+
+            <h1 className="text-3xl font-bold">
+              {blog.title}
+            </h1>
+
+            <article className="prose mt-6 max-w-none">
+              {blog.description}
+            </article>
+          </div>
+
+          {/* ================= RIGHT ================= */}
+          <aside className="lg:col-span-1">
+            <h3 className="text-lg font-semibold mb-4">
+              Related Blogs
+            </h3>
+
+            <p className="text-sm text-muted-foreground mb-4">
+              Explore more articles and insights.
+            </p>
+
+            <RelatedBlogs blogs={relatedBlogs} />
+          </aside>
+
         </div>
       </Container>
     </main>

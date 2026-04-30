@@ -108,7 +108,7 @@ export default function RootLayout({
           {/* App Content */}
           <Navbar />
           <ScrollToTop />
-          {/* <Hero /> */}
+          
           {children}
           <Analytics />
           <Footer />

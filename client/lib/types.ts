@@ -233,7 +233,7 @@ export type CreateBookingInput = {
 
 export type HeroAnimationType = "project" | "service" | "blog" | "simple";
 
-export type HeroSize = "full" | "half" | "compact";
+export type HeroSize = "full" | "half" | "medium" | "compact" | "small";
 
 export type HeroAnimationConfig = {
   type: HeroAnimationType;

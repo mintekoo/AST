@@ -5,9 +5,8 @@ import { fetchServices, API_BASE_URL } from "@/lib/api";
 import type { Service } from "@/lib/types";
 import Image from "next/image";
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
-import HeroServices from "@/components/hero/HeroServices";
+import Hero from "@/components/hero/Hero";
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -24,16 +23,18 @@ export default async function ServicesPage(props: {
     const resp = await fetchServices({ page });
     const data = resp?.data ?? [];
     const meta = resp?.meta;
+
     return (
-        <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <main className="bg-background text-foreground min-h-screen">
+            <Hero variant="service" />
+            
             <Container className="py-12 sm:py-16 lg:py-20">
-                <HeroServices />
                 <SectionHeader
                     title="Our Services"
-                    subtitle="Discover the range of professional car rental services we provide."
+                    subtitle="Discover the range of professional software and technology solutions we provide."
                 />
 
-                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
                     {data.map((s: Service) => {
                         const fullImage = s.image ? `${API_BASE_URL}/${s.image}` : "/window.svg";
 
@@ -41,40 +42,46 @@ export default async function ServicesPage(props: {
                             <Link
                                 href={`/services/${s.id}`}
                                 key={s.id}
-                                className="flex flex-col justify-between group rounded-2xl shadow-sm ring-1 ring-border transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md bg-card-background dark:bg-card-background-dark animate-fade-in"
+                                className="flex flex-col group rounded-[var(--radius)] border border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-primary/50 overflow-hidden"
                             >
-                                {/* Image */}
-                                <div className="relative aspect-video overflow-hidden rounded-t-2xl">
+                                {/* Image Container */}
+                                <div className="relative aspect-video overflow-hidden">
                                     <Image
                                         src={fullImage}
                                         alt={s.title}
                                         fill
-                                        className="object-cover transition-transform duration-300 group-hover:scale-105"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-110"
                                         unoptimized
                                     />
+                                    {/* Subtle overlay for image depth */}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                                 </div>
 
                                 {/* Content */}
-                                <div className="space-y-2 p-4">
-                                    <h3 className="text-base font-semibold text-foreground dark:text-foreground-dark leading-6">
+                                <div className="flex flex-col flex-1 p-6">
+                                    <h3 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
                                         {s.title}
                                     </h3>
-                                    <p className="line-clamp-3 text-sm text-muted-foreground dark:text-muted-foreground-dark">
+                                    <p className="mt-3 line-clamp-3 text-sm text-muted-foreground leading-relaxed">
                                         {s.content}
                                     </p>
-                                </div>
-
-                                {/* View Details Button */}
-                                <div className="p-4 pt-0">
-                                    <Button variant="primary" size="sm" className="w-full">
-                                        View Details
-                                    </Button>
+                                    
+                                    <div className="mt-auto pt-6">
+                                        <div className="flex items-center text-primary text-sm font-bold">
+                                            View Details
+                                            <svg className="w-4 h-4 ml-2 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                                            </svg>
+                                        </div>
+                                    </div>
                                 </div>
                             </Link>
                         );
                     })}
                 </div>
-                <Pagination meta={meta} basePath="/services" />
+                <div className="mt-12">
+                    <Pagination meta={meta} basePath="/services" />
+                </div>
             </Container>
         </main>
     );

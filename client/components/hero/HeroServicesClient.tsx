@@ -14,7 +14,7 @@ export default function HeroServicesClient({
       totalItems={services.length}
       config={{
         type: "service",
-        size: "half",
+        size: "medium",
       }}
       renderMedia={(index) => (
         <HeroMediaCarousel
@@ -27,12 +27,14 @@ export default function HeroServicesClient({
         const item = services[index];
 
         return (
-          <div className="text-white max-w-2xl px-6 text-center">
-            <h1 className="text-3xl sm:text-4xl font-bold">
+          <div className="text-white max-w-3xl px-6 text-center">
+            <span className="inline-block px-3 py-1 mb-4 text-xs font-bold tracking-widest uppercase bg-primary rounded-full">
+              Our Expertise
+            </span>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight">
               {item?.title}
             </h1>
-
-            <p className="mt-4 text-white/80 text-base sm:text-lg">
+            <p className="mt-6 text-white/90 text-lg sm:text-xl max-w-xl mx-auto leading-relaxed">
               {item?.content}
             </p>
           </div>

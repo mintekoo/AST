@@ -48,9 +48,9 @@ export default async function BlogsPage({
 
   return (
     <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <Hero variant="blog" />
       <Container className="py-12 sm:py-16 lg:py-20">
 
-        <Hero variant="blog" />
 
         <SectionHeader
           title="Latest Articles"

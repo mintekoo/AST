@@ -1,5 +1,4 @@
 // app/page.tsx
-import CategoriesSection from "@/components/sections/CategoriesSection";
 import ProjectsSection from "@/components/sections/ProjectsSection";
 import BlogSection from "@/components/sections/BlogSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
@@ -10,8 +9,9 @@ import Excellence from "@/app/staticsPages/Excellence";
 import Differentiators from "@/app/staticsPages/Differentiators";
 import Contact from "./staticsPages/Contact";
 import Clients from "@/app/staticsPages/Clients";
-import { fetchCategories, fetchAbouts, fetchServices, fetchBlogs, fetchPartners, fetchTestimonials, fetchProjects } from "@/lib/api";
-import type { Category, Blog, Service, About, Testimonial, Partner, Project } from "@/lib/types";
+import { fetchAbouts, fetchServices, fetchBlogs, fetchPartners, fetchTestimonials, fetchProjects } from "@/lib/api";
+import type { Blog, Service, About, Testimonial, Partner, Project } from "@/lib/types";
+import Hero from "@/components/sections/Hero";
 
 export const metadata = {
   title: "Abyssinia Software Technology PLC",
@@ -25,7 +25,7 @@ export const metadata = {
     siteName: "Abyssinia Software",
     images: [
       {
-        url: "/og-image.png", // 👉 add a real image in public folder
+        url: "/og-image.png",
         width: 1200,
         height: 630,
         alt: "Abyssinia Software Technology",
@@ -40,7 +40,7 @@ export const metadata = {
     title: "Abyssinia Software Technology PLC",
     description:
       "Custom software, web & mobile solutions built for performance, security, and scale.",
-    images: ["/og-image.png"], // 👉 same image or dedicated twitter image
+    images: ["/og-image.png"],
   },
 
   robots: {
@@ -63,7 +63,6 @@ export const metadata = {
 export default async function Home() {
   const [
     projectsResp,
-    categoriesResp,
     blogsResp,
     servicesResp,
     aboutsResp,
@@ -71,7 +70,6 @@ export default async function Home() {
     testimonialsResp,
   ] = await Promise.all([
     fetchProjects({ page: 1, perPage: 6 }),
-    fetchCategories({ page: 1, perPage: 10 }),
     fetchBlogs({ page: 1, perPage: 10 }),
     fetchServices({ page: 1, perPage: 10 }),
     fetchAbouts({ page: 1, perPage: 4 }),
@@ -80,7 +78,6 @@ export default async function Home() {
   ]);
 
   const projects: Project[] = projectsResp?.data ?? [];
-  const categories: Category[] = categoriesResp?.data ?? [];
   const recentBlogs: Blog[] = blogsResp?.data ?? [];
   const services: Service[] = servicesResp?.data ?? [];
   const abouts: About[] = aboutsResp?.data ?? [];
@@ -88,9 +85,9 @@ export default async function Home() {
   const testimonials: Testimonial[] = testimonialsResp?.data ?? [];
 
   return (
-    <main className="bg-background/80 backdrop-blur-sm text-foreground">
+    <main className="backdrop-blur-sm text-foreground">
+      <Hero />
       <ProjectsSection projects={projects} />
-      <CategoriesSection categories={categories} />
       <BlogSection blogs={recentBlogs} />
       <AboutSection abouts={abouts} />
       <Excellence />

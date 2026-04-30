@@ -1,4 +1,3 @@
-// components/hero/HeroAnimatedLayout.tsx
 "use client";
 
 import React from "react";
@@ -32,28 +31,28 @@ export default function HeroAnimatedLayout({
   return (
     <section
       ref={heroRef}
-      className={`relative w-full ${sizeClass} overflow-hidden`}
+      className={`relative w-full ${sizeClass} overflow-hidden bg-black`}
     >
-      {/* 🌑 Background overlay */}
-      <div ref={bgRef} className="absolute inset-0 bg-black/40 z-0" />
-
-      {/* 🎬 MEDIA LAYER (FIXED FOR GSAP ANIMATION) */}
+      {/* 🎬 MEDIA LAYER (Moved to back) */}
       <div
         ref={mediaRef}
-        className="absolute inset-0 z-10 will-change-transform"
+        className="absolute inset-0 z-0 will-change-transform"
       >
-        {/* 🔥 IMPORTANT: stable wrapper prevents GSAP break */}
-        <div className="w-full h-full">
-          {renderMedia(currentSlide)}
-        </div>
+        {renderMedia(currentSlide)}
       </div>
 
-      {/* 🎯 TEXT LAYER */}
+      {/* 🌑 OVERLAY LAYER (Between media and text) */}
+      <div 
+        ref={bgRef} 
+        className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-black/60 via-transparent to-background" 
+      />
+
+      {/* 🎯 TEXT LAYER (Front) */}
       <div
         ref={textRef}
         className="absolute inset-0 z-20 flex items-center justify-center text-center px-4 pointer-events-none"
       >
-        <div className="pointer-events-auto">
+        <div className="pointer-events-auto max-w-4xl">
           {typeof children === "function"
             ? children(currentSlide)
             : children}
