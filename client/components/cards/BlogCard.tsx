@@ -55,9 +55,9 @@ export default function BlogCard({ blog }: { blog: Blog }) {
       {/* Content */}
       <div className="flex flex-col flex-1 p-5 space-y-3">
 
-        {/* <time className="text-xs text-muted-foreground">
+        <time className="text-xs text-muted-foreground">
           {new Date(blog.createdAt).toLocaleDateString()}
-        </time> */}
+        </time>
 
         <h3 className="text-base font-semibold text-foreground line-clamp-2">
           {blog.title}

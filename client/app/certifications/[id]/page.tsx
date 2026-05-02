@@ -1,3 +1,4 @@
+// app/certifications/[id]/page.tsx
 import Container from "@/components/ui/Container";
 import { fetchCertification, API_BASE_URL } from "@/lib/api";
 import Image from "next/image";

@@ -47,8 +47,10 @@ export default async function BlogsPage({
   const meta = blogRes.meta;
 
   return (
-    <main className="backdrop-blur text-foreground ">
+    <main className="backdrop-blur text-foreground  overflow-hidden">
+      <div className="mt-20">
         <Hero variant="blog" />
+      </div>
       <Container className="py-12 sm:py-16 lg:py-20">
 
 

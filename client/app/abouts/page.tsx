@@ -30,6 +30,13 @@ export default async function AboutPage(props: {
     return (
         <main className="relative  text-foreground overflow-hidden">
 
+
+            <div className="mt-20">
+                <Hero
+                    variant="about"
+                />
+            </div>
+
             {/* 🎨 Letter Glitch Background (About only) */}
             <div className="absolute inset-0 -z-10 pointer-events-none opacity-30">
                 <LetterGlitch
@@ -98,24 +105,9 @@ export default async function AboutPage(props: {
                         );
                     })}
                 </div>
-
-                {/* Excellence */}
-                <div className="mt-20">
-                    <Excellence />
-                </div>
-
-                <div className="mt-20">
-
-                    <Hero
-                        variant="simple"
-                    />
-                </div>
-
-                {/* Partners */}
-                <div className="mt-20">
-                    <PartnersSection partners={partners} />
-                </div>
             </Container>
+            <Excellence />
+            <PartnersSection partners={partners} />
         </main>
     );
 }

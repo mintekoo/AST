@@ -10,13 +10,17 @@ import HeroFAQ from "./HeroFAQ";
 import HeroLocation from "./HeroLocation";
 import HeroSocial from "./HeroSocial";
 import HeroTestimonial from "./HeroTestimonial";
+import HeroAbout from "./HeroAbout";
+import HeroCertifications from "./HeroCertifications";
 
 type HeroVariant =
   | "project"
   | "service"
   | "blog"
   | "category"
+  | "certifications"
   | "gallery"
+  | "about"
   | "faq"
   | "location"
   | "social"
@@ -40,6 +44,11 @@ export default function Hero({ variant = "simple" }: HeroProps) {
 
     case "category":
       return <HeroCategory />;
+    case "about":
+      return <HeroAbout />;
+
+    case "certifications":
+      return <HeroCertifications />;
 
     case "gallery":
       return <HeroGallery />;

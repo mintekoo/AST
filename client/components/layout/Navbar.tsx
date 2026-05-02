@@ -143,12 +143,25 @@ export default function Navbar() {
       />
 
       <Container className="flex items-center justify-between w-full">
-        <div ref={logoRef} className="flex flex-col items-center leading-tight">
-          <span className="text-2xl font-bold text-primary leading-none drop-shadow-sm">
-            <ShinyText text="AST" speed={2} color="var(--color-foreground)" shineColor="var(--color-primary)" />
+        <div
+          ref={logoRef}
+          className="flex flex-col items-center leading-tight group cursor-pointer"
+        >
+          <span className="text-2xl font-bold text-primary leading-none drop-shadow-sm transition-all duration-300 group-hover:scale-110 group-hover:font-extrabold">
+            <ShinyText
+              text="AST"
+              speed={2}
+              color="var(--color-foreground)"
+              shineColor="var(--color-primary)"
+            />
           </span>
-          <span className="text-[11px] font-medium text-primary tracking-wide text-center leading-none mt-[2px] drop-shadow-sm">
-            <ShinyText text="Abyssinia Software Technology PLC" speed={2.5} color="var(--color-primary)" />
+
+          <span className="text-[11px] font-medium text-primary tracking-wide text-center leading-none mt-[2px] drop-shadow-sm transition-all duration-300 group-hover:text-[13px] group-hover:font-semibold">
+            <ShinyText
+              text="Abyssinia Software Technology PLC"
+              speed={2.5}
+              color="var(--color-primary)"
+            />
           </span>
         </div>
 
