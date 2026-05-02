@@ -1,6 +1,5 @@
 "use client";
 
-import Container from "@/components/ui/Container";
 import TestimonialCard from "@/components/cards/TestimonialCard";
 import type { Testimonial } from "@/lib/types";
 import AutoCarousel from "@/components/ui/AutoCarousel";
@@ -22,35 +21,41 @@ interface TestimonialsSectionProps {
   testimonials: Testimonial[];
 }
 
-export default function TestimonialsSection({ testimonials }: TestimonialsSectionProps) {
+export default function TestimonialsSection({
+  testimonials,
+}: TestimonialsSectionProps) {
   const normalized = testimonials.map(normalizeImage);
 
   return (
-    <section
-      id="testimonials"
-      className="py-16 lg:py-24 bg-gradient-to-b from-background to-muted/30"
-    >
-      <Container>
-        {/* Header */}
-        <div className="mb-10 flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <section id="testimonials" className="py-20">
+
+      {/* Header */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12">
+        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+
           <div>
-            <h2 className="text-2xl sm:text-3xl font-semibold tracking-tight">
-              What our customers say
+            <h2 className="text-3xl font-semibold text-foreground">
+              What Our Customers Say
             </h2>
-            <p className="text-sm text-muted mt-2 max-w-md">
-              Real feedback from clients who’ve worked with us and trust our solutions.
+
+            <p className="text-muted-foreground mt-2 max-w-xl">
+              Trusted feedback from clients across government, enterprise,
+              and private sectors who use our solutions daily.
             </p>
           </div>
 
           <Link
             href="/testimonials"
-            className="text-sm font-medium text-primary hover:underline"
+            className="text-sm font-medium text-primary hover:opacity-80 transition"
           >
             Read all →
           </Link>
-        </div>
 
-        {/* Carousel */}
+        </div>
+      </div>
+
+      {/* FULL WIDTH CAROUSEL ZONE */}
+      <div className="w-full">
         <AutoCarousel speed={7000} gap={24} pauseOnHover>
           {normalized.map((t) => (
             <div
@@ -61,7 +66,8 @@ export default function TestimonialsSection({ testimonials }: TestimonialsSectio
             </div>
           ))}
         </AutoCarousel>
-      </Container>
+      </div>
+
     </section>
   );
 }

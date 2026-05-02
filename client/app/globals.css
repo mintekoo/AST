@@ -7,12 +7,11 @@
 /* Base theme variables */
 :root {
   /* Brand Colors */
-  --color-background: #ffffff;
+  --color-background: #f6faff;
   --color-foreground: #171717;
   --color-primary: #089d25;
   --color-muted: #5c5c5c;
   --color-primary-hover: #fcb32a;
-  --color-muted: #5c5c5c;
 
   /* Card & Surface Colors - Light */
   --color-card-bg: #f8fafc; /* Subtle off-white for cards */

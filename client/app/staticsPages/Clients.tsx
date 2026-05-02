@@ -1,9 +1,7 @@
-// app/staticsPages/Clients.tsx
 "use client";
 
 import React from "react";
 import { Users } from "lucide-react";
-import LineWaves from "@/components/ui/LineWaves";
 
 const clientsData = [
   "International NGOs",
@@ -14,43 +12,59 @@ const clientsData = [
 
 export default function Clients() {
   return (
-    <section className="relative py-16 overflow-hidden">
+    <section className="py-16">
       
-      {/* 🎨 Animated Background (subtle) */}
-      <div className="absolute inset-0 -z-10 opacity-40 pointer-events-none">
-        <LineWaves
-          speed={0.2}
-          innerLineCount={20}
-          outerLineCount={24}
-          warpIntensity={0.6}
-          brightness={0.12}
-          color1="#089d25"
-          color2="#089d25"
-          color3="#089d25"
-        />
-      </div>
-
-      {/* 🌫 Overlay for readability */}
-      <div className="absolute inset-0 -z-10 bg-background/80 backdrop-blur-sm" />
-
-      {/* 📦 Content */}
+      {/* Content */}
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <h2 className="text-3xl font-extrabold text-primary mb-10">
-          Clients & Past Performance
+
+        {/* Title */}
+        <h2 className="text-3xl font-extrabold text-foreground mb-4">
+          Clients & Partners
         </h2>
 
-        <p className="text-muted mb-8">
-          Abyssinia Softwareal has successfully provided transport services to numerous reputable organizations, including:
+        {/* Description */}
+        <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
+          Abyssinia Software Technology PLC has successfully delivered
+          innovative software solutions for organizations across multiple
+          sectors, including government and enterprise clients.
         </p>
 
-        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
-          {clientsData.map((client, index) => (
-            <li key={index} className="flex items-start gap-3">
-              <Users className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
-              <span className="text-foreground/70">{client}</span>
-            </li>
-          ))}
-        </ul>
+        {/* Glass container */}
+        <div
+          className="
+            backdrop-blur-xl
+            bg-background/60
+            border border-border
+            rounded-2xl
+            p-6 sm:p-8
+            shadow-lg
+          "
+        >
+          <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-left">
+            {clientsData.map((client, index) => (
+              <li
+                key={index}
+                className="
+                  flex items-start gap-3
+                  p-4 rounded-xl
+
+                  backdrop-blur-md
+                  bg-background/40
+                  border border-border
+
+                  transition-all duration-300
+                  hover:-translate-y-1 hover:shadow-md
+                "
+              >
+                <Users className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+                <span className="text-foreground">
+                  {client}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
       </div>
     </section>
   );

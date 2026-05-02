@@ -1,6 +1,5 @@
 "use client";
 
-import Container from "@/components/ui/Container";
 import BlogCard from "@/components/cards/BlogCard";
 import type { Blog } from "@/lib/types";
 import Link from "next/link";
@@ -12,21 +11,30 @@ interface BlogSectionProps {
 
 export default function BlogSection({ blogs }: BlogSectionProps) {
   return (
-    <section id="blog" className="py-14 sm:py-16 lg:py-20">
-      <Container>
-        <div className="mb-8 flex items-center justify-between gap-4">
-          <h2 className="text-2xl font-semibold sm:text-3xl">
+    <section id="blog" className="py-20">
+
+      {/* Header */}
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mb-12 flex items-end justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-semibold text-foreground">
             Latest Articles
           </h2>
 
-          <Link
-            href="/blogs"
-            className="text-sm font-medium text-primary-600 hover:underline"
-          >
-            Read all
-          </Link>
+          <p className="text-muted-foreground mt-2 max-w-xl">
+            Insights, updates, and engineering thoughts from Abyssinia Software.
+          </p>
         </div>
 
+        <Link
+          href="/blogs"
+          className="text-sm font-medium text-primary hover:opacity-80 transition"
+        >
+          Read all →
+        </Link>
+      </div>
+
+      {/* Full width carousel */}
+      <div className="w-full">
         <AutoCarousel speed={7000} gap={24} pauseOnHover>
           {blogs.map((b) => (
             <div
@@ -37,7 +45,8 @@ export default function BlogSection({ blogs }: BlogSectionProps) {
             </div>
           ))}
         </AutoCarousel>
-      </Container>
+      </div>
+
     </section>
   );
 }

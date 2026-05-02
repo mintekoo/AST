@@ -12,7 +12,7 @@ export default async function LocationsPage() {
   const locations = resp?.data ?? [];
 
   return (
-    <main className="py-20 bg-background text-foreground">
+    <main className="py-20 backdrop-blur-md text-foreground">
       <div className="max-w-6xl mx-auto px-4">
 
         {/* Header */}
@@ -20,7 +20,7 @@ export default async function LocationsPage() {
           <h2 className="text-4xl font-extrabold text-primary">
             Our Locations
           </h2>
-          <p className="mt-4 text-lg text-muted">
+          <p className="mt-4 text-lg">
             Find us, contact us, or visit our office.
           </p>
         </div>
@@ -130,7 +130,7 @@ export default async function LocationsPage() {
             </div>
 
             {/* Footer */}
-            <p className="col-span-full block  text-center text-muted italic text-lg">
+            <p className="col-span-full block  text-center italic text-lg">
               {loc.description}
             </p>
           </div>

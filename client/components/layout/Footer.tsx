@@ -65,117 +65,134 @@ export default async function Footer() {
   };
 
   return (
-    <footer className="bg-footer text-footer border-t border-footer transition-colors duration-300">
-      <Container className="py-16 flex flex-col gap-12">
+    <footer className="relative bg-footer text-footer border-t border-footer">
+      <Container className="py-20 space-y-14">
 
-        {/* MAIN GRID */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-12">
+        {/* TOP GRID */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-14">
 
-          {/* Brand Section */}
-          <div className="flex flex-col gap-6">
+          {/* Brand */}
+          <div className="space-y-6">
             <Link href="/" className="flex items-center gap-3 group">
-              <span className="inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary text-white font-bold text-xl shadow-lg shadow-[var(--color-primary)]/20 group-hover:scale-105 transition-transform">
+              <div className="h-12 w-12 rounded-xl bg-primary flex items-center justify-center text-white font-bold shadow-md group-hover:scale-105 transition">
                 AST
-              </span>
-              <span className="text-xl font-bold tracking-tight">
+              </div>
+              <span className="text-lg font-semibold tracking-tight">
                 Abyssinia Software
               </span>
             </Link>
-            <p className="text-sm leading-relaxed text-footer-muted max-w-xs">
-              Innovating high-performance software solutions. We specialize in real-time systems and modern web architecture.
+
+            <p className="text-sm text-footer-muted leading-relaxed">
+              Building scalable, high-performance software systems for enterprise and government institutions across Ethiopia and beyond.
             </p>
           </div>
 
-          {/* Navigation Sets */}
-          <div className="grid grid-cols-2 gap-8 lg:col-span-2">
-            <div>
-              <h3 className="text-primary font-bold uppercase tracking-wider text-xs mb-6">Explore</h3>
-              <ul className="space-y-4">
-                {productLinks.map((l) => (
-                  <li key={l.href}>
-                    <Link href={l.href} className="text-sm footer-link transition-colors">
-                      {l.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <div>
-              <h3 className="text-primary font-bold uppercase tracking-wider text-xs mb-6">Company</h3>
-              <ul className="space-y-4">
-                {companyLinks.map((l) => (
-                  <li key={l.href}>
-                    <Link href={l.href} className="text-sm footer-link transition-colors">
-                      {l.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          {/* Contact Details */}
+          {/* Explore */}
           <div>
-            <h3 className="text-primary font-bold uppercase tracking-wider text-xs mb-6">Get in Touch</h3>
-            <ul className="space-y-4 text-sm">
-              {primaryLocation?.name && (
-                <li className="flex gap-3 text-footer-muted">
-                  <MapPin className="w-5 h-5 text-primary shrink-0" />
-                  <span>{primaryLocation.name}</span>
-                </li>
-              )}
-              {primaryLocation?.phone?.map((p, i) => (
-                <li key={i} className="flex gap-3 text-footer-muted group">
-                  <Phone className="w-5 h-5 text-primary shrink-0" />
-                  <a href={`tel:${p}`} className="hover:text-primary transition-colors">{p}</a>
-                </li>
-              ))}
-              {primaryLocation?.email?.map((e, i) => (
-                <li key={i} className="flex gap-3 text-footer-muted group">
-                  <Mail className="w-5 h-5 text-primary shrink-0" />
-                  <a href={`mailto:${e}`} className="hover:text-primary transition-colors break-all">{e}</a>
+            <h3 className="text-xs uppercase tracking-widest text-primary mb-6">
+              Explore
+            </h3>
+            <ul className="space-y-3">
+              {productLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-sm text-footer-muted hover:text-primary transition"
+                  >
+                    {l.name}
+                  </Link>
                 </li>
               ))}
             </ul>
           </div>
+
+          {/* Company */}
+          <div>
+            <h3 className="text-xs uppercase tracking-widest text-primary mb-6">
+              Company
+            </h3>
+            <ul className="space-y-3">
+              {companyLinks.map((l) => (
+                <li key={l.href}>
+                  <Link
+                    href={l.href}
+                    className="text-sm text-footer-muted hover:text-primary transition"
+                  >
+                    {l.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Contact */}
+          <div>
+            <h3 className="text-xs uppercase tracking-widest text-primary mb-6">
+              Contact
+            </h3>
+
+            <div className="space-y-4 text-sm text-footer-muted">
+
+              {primaryLocation?.name && (
+                <div className="flex gap-3">
+                  <MapPin className="w-5 h-5 text-primary shrink-0" />
+                  <span>{primaryLocation.name}</span>
+                </div>
+              )}
+
+              {primaryLocation?.phone?.map((p, i) => (
+                <div key={i} className="flex gap-3">
+                  <Phone className="w-5 h-5 text-primary shrink-0" />
+                  <a href={`tel:${p}`} className="hover:text-primary transition">
+                    {p}
+                  </a>
+                </div>
+              ))}
+
+              {primaryLocation?.email?.map((e, i) => (
+                <div key={i} className="flex gap-3">
+                  <Mail className="w-5 h-5 text-primary shrink-0" />
+                  <a href={`mailto:${e}`} className="hover:text-primary transition break-all">
+                    {e}
+                  </a>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
 
-        {/* SOCIALS & LEGAL */}
-        <div className="pt-10 border-t border-footer">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+        {/* BOTTOM BAR */}
+        <div className="pt-8 border-t border-footer flex flex-col md:flex-row items-center justify-between gap-6">
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3">
-              {socials.map((s) => {
-                const Icon = getIcon(s.platform);
-                return (
-                  <a
-                    key={s.id}
-                    href={s.url}
-                    target="_blank"
-                    className="social-icon-btn w-10 h-10 transition-all duration-300"
-                  >
-                    <Icon className="w-5 h-5" />
-                  </a>
-                );
-              })}
-            </div>
-
-            {/* Copyright & Status */}
-            <div className="flex flex-col items-center md:items-end gap-2">
-              <p className="text-xs text-footer-muted font-medium">
-                © {new Date().getFullYear()} Abyssinia Software.
-              </p>
-              <div className="flex items-center gap-2 text-[10px] uppercase tracking-[0.1em] text-primary font-bold">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                </span>
-                Systems Operational
-              </div>
-            </div>
-
+          {/* Socials */}
+          <div className="flex gap-3">
+            {socials.map((s) => {
+              const Icon = getIcon(s.platform);
+              return (
+                <a
+                  key={s.id}
+                  href={s.url}
+                  target="_blank"
+                  className="h-10 w-10 flex items-center justify-center rounded-lg bg-white/5 hover:bg-primary hover:text-white transition"
+                >
+                  <Icon className="w-5 h-5" />
+                </a>
+              );
+            })}
           </div>
+
+          {/* Status */}
+          <div className="text-center md:text-right space-y-1">
+            <p className="text-xs text-footer-muted">
+              © {new Date().getFullYear()} Abyssinia Software PLC
+            </p>
+
+            <div className="flex items-center justify-center md:justify-end gap-2 text-[10px] uppercase tracking-widest text-primary font-semibold">
+              <span className="h-2 w-2 rounded-full bg-primary animate-pulse" />
+              Systems Operational
+            </div>
+          </div>
+
         </div>
       </Container>
     </footer>

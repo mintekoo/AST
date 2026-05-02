@@ -47,7 +47,7 @@ export default async function BlogsPage({
   const meta = blogRes.meta;
 
   return (
-    <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+    <main className="backdrop-blur text-foreground ">
         <Hero variant="blog" />
       <Container className="py-12 sm:py-16 lg:py-20">
 
@@ -58,7 +58,7 @@ export default async function BlogsPage({
         />
 
         {/* FILTER UI */}
-        <div className="mb-10 rounded-2xl border border-border p-4 sm:p-6 bg-card-background dark:bg-card-background-dark">
+        <div className="backdrop-blur-md mb-10 rounded-3xl border border-border p-4 sm:p-6 bg-card-background dark:bg-card-background-dark">
           <h2 className="text-sm font-semibold mb-1">
             Filter by Category
           </h2>

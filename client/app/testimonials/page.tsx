@@ -23,7 +23,7 @@ export default async function TestimonialsPage(props: {
   const data = resp?.data ?? [];
 
   return (
-    <main className="bg-background/80 backdrop-blur-sm text-foreground">
+    <main className="backdrop-blur-sm text-foreground">
       <Container className="py-12 sm:py-16 lg:py-20">
         <SectionHeader title="What our customers say" subtitle="Real reviews from happy drivers." />
 

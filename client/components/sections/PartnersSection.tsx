@@ -1,7 +1,5 @@
-// components/sections/PartnersSection.tsx
 "use client";
 
-import Container from "@/components/ui/Container";
 import Carousel from "@/components/ui/Carousel";
 import PartnerCard, { PartnerCardType } from "@/components/cards/PartnerCard";
 import Link from "next/link";
@@ -13,24 +11,37 @@ interface PartnersSectionProps {
 }
 
 export default function PartnersSection({ partners }: PartnersSectionProps) {
-  // Map backend Partner to frontend PartnerCardType
   const cardPartners: PartnerCardType[] = partners.map((p) => ({
-    id: p.id ?? p.name, // fallback to name if id missing
+    id: p.id ?? p.name,
     name: p.name,
     contact: p.contact,
     imageUrl: p.image ? `${API_BASE_URL}/${p.image}` : undefined,
   }));
 
   return (
-    <section id="partners" className="py-14 sm:py-16 lg:py-20">
-      <Container>
-        <div className="mb-4 flex items-center justify-between gap-2">
-          <h2 className="text-2xl font-semibold sm:text-3xl">Our Partners</h2>
-          <Link href="/partners" className="text-sm font-medium text-primary-600 hover:underline">
+    <section id="partners" className="py-16 w-full">
+      
+      {/* Inner content wrapper (only for text alignment) */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+        {/* Header */}
+        <div className="mb-6 flex items-center justify-between gap-2">
+          <h2 className="text-2xl font-semibold sm:text-3xl text-foreground">
+            Our Partners
+          </h2>
+
+          <Link
+            href="/partners"
+            className="text-sm font-medium text-primary hover:opacity-80 transition"
+          >
             See all
           </Link>
         </div>
 
+      </div>
+
+      {/* FULL WIDTH CAROUSEL */}
+      <div className="w-full">
         <Carousel
           slidesPerView={1}
           continuous={true}
@@ -44,7 +55,8 @@ export default function PartnersSection({ partners }: PartnersSectionProps) {
             <PartnerCard key={p.id} partner={p} />
           ))}
         </Carousel>
-      </Container>
+      </div>
+
     </section>
   );
 }

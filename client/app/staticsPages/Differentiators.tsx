@@ -5,48 +5,85 @@ import { Check } from "lucide-react";
 import VerticalDualCarousel from "@/components/ui/VerticalDualCarousel";
 
 const differentiatorsData = [
-    { title: "Proven Track Record", description: "Successfully mobilized over 1,000 vehicles." },
-    { title: "Industry Expertise", description: "10+ years serving international clients." },
-    { title: "Reliable & Safe Operations", description: "Well-maintained fleet and trained drivers." },
-    { title: "Technology-Driven Service", description: "Real-time tracking & automated fleet systems." },
-    { title: "Cost-Effective Solutions", description: "Top-tier service with competitive pricing." },
-    { title: "24/7 Customer Support", description: "Always-on dedicated assistance." },
+  {
+    title: "15+ Years of Proven Excellence",
+    description: "Ethiopia’s trusted software powerhouse delivering long-term innovation."
+  },
+  {
+    title: "Enterprise & Government Expertise",
+    description: "Custom software for ministries, schools, hospitals, and large enterprises."
+  },
+  {
+    title: "Industry-Specific Solutions",
+    description: "Tailored systems for real estate, manufacturing, healthcare, and more."
+  },
+  {
+    title: "Technology-Driven Engineering",
+    description: "Modern architectures with scalable, automated digital systems."
+  },
+  {
+    title: "High-Performance Delivery",
+    description: "98–100% success rate in mission-critical software projects."
+  },
+  {
+    title: "24/7 Dedicated Support",
+    description: "Always-available technical support for continuous business operations."
+  },
 ];
 
 export default function Differentiators() {
-    return (
-        <section className="py-16 bg-background">
-            <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-                <h2 className="text-3xl font-extrabold text-center mb-10 text-foreground text-primary">
-                    Why Choose Us
-                </h2>
+  return (
+    <section className="py-16">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-                <VerticalDualCarousel>
-                    {differentiatorsData.map((item, i) => (
-                        <div
-                            key={i}
-                            className="
-                                flex items-start gap-4 p-4
-                                rounded-2xl
-                                bg-background ring-1 ring-muted
-                                transition-transform duration-300
-                                hover:-translate-y-0.5 hover:shadow-md
-                            "
-                        >
-                            <Check className="w-6 h-6 text-primary mt-1 flex-shrink-0" />
+        {/* Title */}
+        <h2 className="text-3xl font-extrabold text-center mb-10 text-foreground">
+          Why Choose Us
+        </h2>
 
-                            <div>
-                                <h3 className="text-lg font-semibold text-foreground">
-                                    {item.title}
-                                </h3>
-                                <p className="text-muted mt-1">
-                                    {item.description}
-                                </p>
-                            </div>
-                        </div>
-                    ))}
-                </VerticalDualCarousel>
-            </div>
-        </section>
-    );
+        {/* Glass wrapper */}
+        <div
+          className="
+            backdrop-blur-xl
+            bg-background/60
+            border border-border
+            rounded-2xl
+            p-6 sm:p-8
+            shadow-lg
+          "
+        >
+          <VerticalDualCarousel>
+            {differentiatorsData.map((item, i) => (
+              <div
+                key={i}
+                className="
+                  flex items-start gap-4 p-5
+                  rounded-xl
+
+                  backdrop-blur-md
+                  bg-background/40
+                  border border-border
+
+                  transition-all duration-300
+                  hover:-translate-y-1 hover:shadow-md
+                "
+              >
+                <Check className="w-5 h-5 text-primary mt-1 flex-shrink-0" />
+
+                <div>
+                  <h3 className="text-lg font-semibold text-foreground">
+                    {item.title}
+                  </h3>
+                  <p className="text-muted-foreground mt-1">
+                    {item.description}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </VerticalDualCarousel>
+        </div>
+
+      </div>
+    </section>
+  );
 }
