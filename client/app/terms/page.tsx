@@ -17,7 +17,7 @@ export default async function TermsPage(props: {
     const meta = resp?.meta;
 
     return (
-        <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <main className="text-foreground backdrop-blur-md">
             <Container className="py-12 sm:py-16 lg:py-20">
                 <SectionHeader
                     title="Terms & Conditions"
@@ -34,7 +34,7 @@ export default async function TermsPage(props: {
                             <Link
                                 key={t.id}
                                 href={`/terms/${t.id}`}
-                                className="flex gap-4 p-4 rounded-2xl bg-card-background dark:bg-card-background-dark ring-1 ring-border hover:shadow-md transition"
+                                className="flex gap-4 p-4 rounded-2xl backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-sm hover:shadow-md transition"
                             >
                                 {/* Image */}
                                 <div className="relative w-24 h-24 flex-shrink-0 overflow-hidden rounded-lg">

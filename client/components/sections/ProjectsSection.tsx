@@ -32,7 +32,6 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
 
         <Carousel
           slidesPerView={1}
-          continuous
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },

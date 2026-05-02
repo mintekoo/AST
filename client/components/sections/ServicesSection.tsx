@@ -35,7 +35,6 @@ export default function ServicesSection({
 
         <Carousel
           slidesPerView={1}
-          continuous
           breakpoints={{
             640: { slidesPerView: 2 },
             1024: { slidesPerView: 3 },

@@ -48,12 +48,11 @@ export default async function CertificationsPage(props: {
                         return (
                             <div
                                 key={c.id}
-                                className="flex flex-col justify-between rounded-2xl shadow-sm ring-1 ring-border bg-card-background dark:bg-card-background-dark transition-transform duration-300 hover:-translate-y-1 hover:shadow-md"
+                                className="flex flex-col justify-between rounded-2xl backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg transition-transform duration-300 hover:-translate-y-1 hover:shadow-xl overflow-hidden"
                             >
                                 <Link
-                                    key={c.id}
                                     href={`/certifications/${c.id}`}
-                                    className="flex flex-col justify-between rounded-2xl shadow-sm ring-1 ring-border bg-card transition-transform duration-300 hover:-translate-y-1 hover:shadow-md overflow-hidden"
+                                    className="flex flex-col h-full"
                                 >
                                     {/* Image */}
                                     <div className="relative aspect-video overflow-hidden">

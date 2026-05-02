@@ -1,13 +1,36 @@
 import Container from "@/components/ui/Container";
 import { fetchBlog, fetchBlogs, API_BASE_URL } from "@/lib/api";
 import Image from "next/image";
+import Script from "next/script";
 import RelatedBlogs from "../RelatedBlogs";
+import { buildSEO, buildBlogSchema } from "@/lib/seo";
+
+type Props = {
+  params: Promise<{ id: string }>;
+};
+
+/* =========================
+   SEO METADATA
+========================= */
+export async function generateMetadata({ params }: Props) {
+  const { id } = await params;
+  const blogResp = await fetchBlog(id);
+  const blog = blogResp.data;
+
+  const image = blog.image ? `${API_BASE_URL}/${blog.image}` : undefined;
+
+  return buildSEO({
+    title: blog.title,
+    content: blog.description,
+    image,
+    path: `/blogs/${id}`,
+    keywords: [blog.title, "software blog", "Ethiopia tech blog"],
+  });
+}
 
 export default async function BlogDetailPage({
   params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
+}: Props) {
   const { id } = await params;
 
   const blogResp = await fetchBlog(id);
@@ -23,8 +46,22 @@ export default async function BlogDetailPage({
 
   const isVideo = fullMedia?.match(/\.(mp4|webm|mkv|ogg)$/i);
 
+  const schema = buildBlogSchema({
+    title: blog.title,
+    content: blog.description,
+    image: fullMedia || "/og-image.png",
+  });
+
   return (
     <main className="bg-background text-foreground">
+      {/* JSON-LD Structured Data */}
+      <Script
+        id="blog-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(schema),
+        }}
+      />
       <Container className="py-20 mt-4 lg:py-16">
 
         {/* 🔥 GRID */}

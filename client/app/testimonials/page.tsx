@@ -35,7 +35,7 @@ export default async function TestimonialsPage(props: {
               <Link
                 key={t.id}
                 href={`/testimonials/${t.id}`}
-                className="flex flex-col justify-between rounded-2xl p-5 shadow-sm ring-1 ring-border bg-card-background dark:bg-card-background-dark animate-fade-in transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md"
+                className="flex flex-col justify-between rounded-2xl p-5 shadow-lg border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/40 dark:bg-black/30 animate-fade-in transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl"
               >
                 <div>
                   {/* Client Info */}

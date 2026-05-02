@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import Container from "@/components/ui/Container";
 import ThemeToggle from "@/components/theme/ThemeToggle";
@@ -27,6 +28,7 @@ const navLinks = [
 
 export default function Navbar() {
   const navRef = useRef<HTMLElement>(null);
+  const pathname = usePathname();
   const logoRef = useRef<HTMLDivElement>(null);
   const linksRef = useRef<HTMLAnchorElement[]>([]);
   const [isOpen, setIsOpen] = useState(false);
@@ -160,23 +162,26 @@ export default function Navbar() {
             <ShinyText
               text="Abyssinia Software Technology PLC"
               speed={2.5}
-              color="var(--color-primary)"
+              color="var(--color-muted-foreground)"
             />
           </span>
         </div>
 
         <nav className="hidden md:flex items-center gap-8 text-[15px] font-medium h-full">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              ref={addLinkRef}
-              href={link.href}
-              className="relative group text-foreground py-3 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] dark:drop-shadow-none"
-            >
-              {link.label}
-              <span className="absolute left-0 bottom-[-4px] h-[2px] w-0 bg-primary transition-all duration-300 group-hover:w-full" />
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
+            return (
+              <Link
+                key={link.href}
+                ref={addLinkRef}
+                href={link.href}
+                className={`relative group py-3 drop-shadow-[0_1px_1px_rgba(0,0,0,0.3)] dark:drop-shadow-none transition-colors ${isActive ? "text-primary font-bold" : "text-foreground hover:text-primary/80"}`}
+              >
+                {link.label}
+                <span className={`absolute left-0 bottom-[-4px] h-[2px] bg-primary transition-all duration-300 ${isActive ? "w-full" : "w-0 group-hover:w-full"}`} />
+              </Link>
+            );
+          })}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -193,11 +198,14 @@ export default function Navbar() {
       {/* MOBILE MENU - Updated to use your theme variables */}
       <div className={`md:hidden absolute top-16 w-full bg-background border-b border-main shadow-xl transition-all duration-500 overflow-hidden ${isOpen ? "max-h-[90vh] opacity-100" : "max-h-0 opacity-0 pointer-events-none"}`}>
         <nav className="flex flex-col gap-4 p-6 text-lg font-medium">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className="py-3 border-b border-main hover:text-primary transition-colors">
-              {link.label}
-            </Link>
-          ))}
+          {navLinks.map((link) => {
+            const isActive = pathname === link.href || (pathname.startsWith(link.href) && link.href !== '/');
+            return (
+              <Link key={link.href} href={link.href} onClick={() => setIsOpen(false)} className={`py-3 border-b border-main transition-colors ${isActive ? "text-primary font-bold" : "hover:text-primary text-foreground"}`}>
+                {link.label}
+              </Link>
+            );
+          })}
           <Link href="/contactus" onClick={() => setIsOpen(false)} className="mt-3 rounded-full bg-primary text-white text-center py-3 text-sm font-semibold">
             Contact Us
           </Link>

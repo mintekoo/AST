@@ -4,6 +4,20 @@ import ContactForm from "@/components/form/ContactForm";
 import { fetchLocations } from "@/lib/api";
 import { MapPin, Phone, Mail, Clock, ArrowRight, Globe } from "lucide-react";
 import type { AppLocation } from "@/lib/types";
+import { Metadata } from "next";
+import Script from "next/script";
+import { siteInfo } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Contact Us | Abyssinia Software Technology PLC",
+  description: "Get in touch with Abyssinia Software Technology PLC. Find our address, phone number, and email for the best software development services in Addis Ababa, Ethiopia.",
+  keywords: [
+    "contact software company Ethiopia",
+    "Abyssinia Software Technology address",
+    "software developers in Addis Ababa contact",
+    "IT company Ethiopia phone number",
+  ],
+};
 
 export default async function ContactPage() {
   const resp = await fetchLocations();
@@ -12,8 +26,31 @@ export default async function ContactPage() {
 
   const hoursToday = getTodayHours(primaryLoc?.workingHours);
 
+  const localBusinessSchema = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    "name": siteInfo.name,
+    "image": `${siteInfo.baseUrl}/og-image.png`,
+    "url": `${siteInfo.baseUrl}/contactus`,
+    "telephone": primaryLoc?.phone?.[0] || siteInfo.phone,
+    "email": primaryLoc?.email?.[0] || siteInfo.email,
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Addis Ababa",
+      "addressCountry": "ET"
+    }
+  };
+
   return (
-    <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+    <main className="text-foreground transition-colors duration-300">
+      {/* JSON-LD Schema for Local SEO */}
+      <Script
+        id="local-business-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(localBusinessSchema),
+        }}
+      />
       <Container className="py-16 sm:py-24 space-y-16">
         <SectionHeader
           title="Contact Us"
@@ -119,7 +156,7 @@ export default async function ContactPage() {
 
           {/* RIGHT: Contact Form (60%) */}
           <div className="lg:w-7/12">
-            <div className="p-8 sm:p-12 rounded-[3rem] bg-card border border-main shadow-2xl shadow-primary/5 relative overflow-hidden">
+            <div className="p-8 sm:p-12 rounded-[3rem] backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-2xl relative overflow-hidden">
               {/* Aesthetic Background Brand Initial */}
               <span className="absolute -top-10 -right-10 text-[200px] font-black text-primary/[0.01] dark:text-white/[0.02] pointer-events-none select-none">
                 A
@@ -148,7 +185,7 @@ export default async function ContactPage() {
             </span>
           </div>
 
-          <div className="h-[450px] w-full rounded-[3rem] overflow-hidden border border-main bg-card shadow-inner relative group">
+          <div className="h-[450px] w-full rounded-[3rem] overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-inner relative group">
             <iframe
               title="Office Location"
               width="100%"
@@ -176,7 +213,7 @@ function ContactInfoItem({
   detail: React.ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-5 p-6 rounded-2xl bg-card border border-main hover:border-primary/40 transition-all duration-300 group">
+    <div className="flex items-center gap-5 p-6 rounded-2xl backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 hover:border-primary/40 transition-all duration-300 group shadow-lg hover:-translate-y-1 hover:shadow-xl">
 
       <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
         {icon}

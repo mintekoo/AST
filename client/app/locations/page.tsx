@@ -6,6 +6,17 @@ import {
   Globe,
   Clock,
 } from "lucide-react";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Locations | Abyssinia Software Technology",
+  description: "Find Abyssinia Software Technology's office locations in Addis Ababa, Ethiopia. Get directions, contact details, and our working hours.",
+  keywords: [
+    "Abyssinia Software location",
+    "software company address Ethiopia",
+    "Addis Ababa tech company location"
+  ],
+};
 
 export default async function LocationsPage() {
   const resp = await fetchLocations();
@@ -143,7 +154,7 @@ export default async function LocationsPage() {
 /* Helper */
 function InfoItem({ icon, text }: { icon: React.ReactNode; text: React.ReactNode }) {
   return (
-    <div className="flex items-start gap-4 p-4 rounded-xl bg-background border border-muted shadow-sm hover:shadow-md transition-all">
+    <div className="flex items-start gap-4 p-4 rounded-xl backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg hover:shadow-xl transition-all hover:-translate-y-1">
       <span className="mt-1">{icon}</span>
 
       {/* CHANGE THIS */}

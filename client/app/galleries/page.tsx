@@ -5,6 +5,7 @@ import Link from "next/link";
 import { fetchGalleries, API_BASE_URL } from "@/lib/api";
 import type { Gallery } from "@/lib/types";
 import Pagination from "@/components/ui/Pagination";
+import BounceCards from "@/components/ui/BounceCards";
 
 export default async function GalleriesPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
     const sp = await searchParams;
@@ -13,24 +14,41 @@ export default async function GalleriesPage({ searchParams }: { searchParams: Pr
     const galleries: Gallery[] = resp.data ?? [];
     const meta = resp?.meta;
 
+    const allImages = galleries.flatMap(g => g.images || []).map(img => `${API_BASE_URL}/${img}`);
+    const heroImages = allImages.slice(0, 5);
+
     return (
-        <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <main className="text-foreground transition-colors">
             <Container className="py-12 sm:py-16 lg:py-20">
-                <h1 className="text-2xl font-bold mb-8">Gallery</h1>
+                {heroImages.length > 0 && (
+                    <div className="flex flex-col items-center justify-center mb-16 overflow-hidden hidden sm:flex">
+                        <BounceCards
+                            className="custom-bounceCards scale-75 sm:scale-100"
+                            images={heroImages}
+                            containerWidth={600}
+                            containerHeight={350}
+                            animationDelay={0.5}
+                            animationStagger={0.08}
+                            enableHover={true}
+                        />
+                    </div>
+                )}
+                
+                <h1 className="text-3xl font-extrabold mb-10 text-center">Our Gallery</h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
                     {galleries.map((gallery) => (
                         <Link
                             href={`/galleries/${gallery.id}`}
                             key={gallery.id}
-                            className="rounded-2xl p-4 shadow-sm ring-1 ring-zinc-200 transition hover:shadow-md"
+                            className="group flex flex-col rounded-2xl p-4 backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
                         >
                             {gallery.images[0] && (
-                                <div className="relative h-48 w-full mb-3 rounded-lg overflow-hidden">
+                                <div className="relative h-56 w-full mb-4 rounded-xl overflow-hidden">
                                     <Image
                                         src={`${API_BASE_URL}/${gallery.images[0]}`}
                                         alt={gallery.title}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover group-hover:scale-110 transition-transform duration-500"
                                         unoptimized
                                     />
                                 </div>

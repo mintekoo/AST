@@ -155,7 +155,7 @@ export default function HeroClient({
             ref={heroRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={handleMouseLeave}
-            className="relative w-full h-[75vh] overflow-hidden pt-16"
+            className="relative w-full h-[95vh] overflow-hidden pt-16"
         >
             <div
                 ref={bgRef}

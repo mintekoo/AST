@@ -36,12 +36,14 @@ export default async function CategoriesPage(props: {
   const meta = resp?.meta;
 
   return (
-    <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
-      <Container className="py-12 sm:py-16 lg:py-20">
-        <HeroCategory />
+    <main className="backdrop-blur-sm  text-foreground">
+      <div className="mt-20">
         <Hero
           variant="category"
         />
+      </div>
+      <Container className="py-12 sm:py-16 lg:py-20">
+
         <SectionHeader
           title="Browse Categories"
           subtitle="Explore content by type and purpose."
@@ -66,7 +68,7 @@ export default async function CategoriesPage(props: {
                 <Link
                   key={c.id}
                   href={`/categories/${c.id}`}
-                  className="group relative isolate overflow-hidden rounded-2xl p-4 shadow-sm ring-1 ring-border transition-transform duration-300 ease-in-out hover:-translate-y-1 hover:shadow-md block bg-card-background dark:bg-card-background-dark"
+                  className="group relative isolate overflow-hidden rounded-2xl p-4 transition-all duration-300 ease-in-out hover:-translate-y-1 hover:shadow-xl block backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg"
                 >
                   <div className="absolute inset-0 -z-10">
                     <Image

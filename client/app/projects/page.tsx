@@ -8,6 +8,12 @@ import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import Pagination from "@/components/ui/Pagination";
 import Hero from "@/components/hero/Hero";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Projects | Top Software Solutions in Ethiopia",
+  description: "Explore our portfolio of successful software, web, and mobile app projects delivered by Abyssinia Software Technology.",
+};
 
 /* ✅ FIX: proper type instead of any */
 type SearchParams = Promise<{
@@ -54,7 +60,7 @@ export default async function ProjectsPage({
 
 
                 {/* FILTER UI */}
-                <div className="backdrop-blur-md mb-10 rounded-3xl border border-border p-4 sm:p-6 bg-card-background dark:bg-card-background-dark">
+                <div className="backdrop-blur-xl mb-10 rounded-3xl border border-white/20 dark:border-white/10 p-4 sm:p-6 bg-white/40 dark:bg-black/30 shadow-lg">
                     <h2 className="text-sm font-semibold mb-1">
                         Filter by Category
                     </h2>
@@ -75,32 +81,32 @@ export default async function ProjectsPage({
                             <Link
                                 key={p.id}
                                 href={`/projects/${p.id}`}
-                                className="flex flex-col justify-between rounded-2xl bg-card-background dark:bg-card-background-dark shadow-sm ring-1 ring-border transition hover:-translate-y-1 hover:shadow-md"
+                                className="group flex flex-col justify-between rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
                             >
                                 {/* Image */}
-                                <div className="relative aspect-video overflow-hidden rounded-t-2xl">
+                                <div className="relative aspect-video overflow-hidden">
                                     <Image
                                         src={fullImage}
                                         alt={p.title}
                                         fill
-                                        className="object-cover"
+                                        className="object-cover transition-transform duration-500 group-hover:scale-105"
                                         unoptimized
                                     />
                                 </div>
 
                                 {/* Content */}
-                                <div className="p-4 space-y-2">
-                                    <h3 className="text-base font-semibold">{p.title}</h3>
-                                    <p className="line-clamp-3 text-sm text-muted-foreground">
+                                <div className="p-5 space-y-3 flex-1 flex flex-col">
+                                    <h3 className="text-lg font-semibold leading-6 text-foreground group-hover:text-primary transition-colors">{p.title}</h3>
+                                    <p className="line-clamp-3 flex-1 text-sm text-muted-foreground">
                                         {p.content}
                                     </p>
                                 </div>
 
                                 {/* Button */}
-                                <div className="p-4 pt-0">
-                                    <Button variant="primary" size="sm" className="w-full">
+                                <div className="p-5 pt-0 mt-auto">
+                                    <div className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors bg-primary text-primary-foreground group-hover:bg-primary/90 h-9 px-3 w-full">
                                         View Details
-                                    </Button>
+                                    </div>
                                 </div>
                             </Link>
                         );

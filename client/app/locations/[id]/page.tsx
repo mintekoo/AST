@@ -1,12 +1,28 @@
 import { fetchLocation } from "@/lib/api";
 import { MapPin, Phone, Mail, Globe } from "lucide-react";
+import { Metadata } from "next";
+import { siteInfo } from "@/lib/site";
 
 type Props = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const resp = await fetchLocation(id);
+  const loc = resp?.data;
+
+  if (!loc) return { title: "Location Not Found" };
+
+  return {
+    title: `${loc.name} | Abyssinia Software Technology`,
+    description: loc.description || `Visit our ${loc.name} location.`,
+  };
+}
+
 export default async function LocationDetailPage({ params }: Props) {
-  const resp = await fetchLocation(params.id);
+  const { id } = await params;
+  const resp = await fetchLocation(id);
   const loc = resp?.data;
 
   if (!loc) {

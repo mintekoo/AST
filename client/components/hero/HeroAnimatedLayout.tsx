@@ -1,3 +1,4 @@
+// components/hero/HeroAnimatedLayout.tsx
 "use client";
 
 import React from "react";
@@ -31,7 +32,7 @@ export default function HeroAnimatedLayout({
   return (
     <section
       ref={heroRef}
-      className={`relative w-full ${sizeClass} overflow-hidden bg-black`}
+      className={`relative w-full ${sizeClass} overflow-hidden`}
     >
       {/* 🎬 MEDIA LAYER (Moved to back) */}
       <div
@@ -44,13 +45,13 @@ export default function HeroAnimatedLayout({
       {/* 🌑 OVERLAY LAYER (Between media and text) */}
       <div 
         ref={bgRef} 
-        className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-black/60 via-transparent to-background" 
+        className="absolute inset-0 z-10 pointer-events-none bg-gradient-to-b from-background/90 via-background/40 to-background dark:from-black/90 dark:via-black/40 dark:to-background" 
       />
 
       {/* 🎯 TEXT LAYER (Front) */}
       <div
         ref={textRef}
-        className="absolute inset-0 z-20 flex items-center justify-center text-center px-4 pointer-events-none"
+        className="absolute inset-0 z-20 flex items-center justify-center text-center px-4 pointer-events-none pt-20 sm:pt-24"
       >
         <div className="pointer-events-auto max-w-4xl">
           {typeof children === "function"

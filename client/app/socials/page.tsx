@@ -37,7 +37,7 @@ export default async function SocialsPage() {
     const meta = resp?.meta;
 
     return (
-        <main className="min-h-screen bg-background text-foreground transition-colors duration-300">
+        <main className="backdrop-blur text-foreground transition-colors duration-300">
             <Container className="py-16 sm:py-24">
                 <SectionHeader
                     title="Connect With Us"
@@ -53,7 +53,7 @@ export default async function SocialsPage() {
                                 key={s.id}
                                 href={s.url}
                                 target="_blank"
-                                className="group relative flex flex-col items-start p-7 rounded-[2rem] bg-card border border-main shadow-sm transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 hover:-translate-y-2 overflow-hidden"
+                                className="group relative flex flex-col items-start p-7 rounded-[2rem] backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:-translate-y-2 overflow-hidden"
                             >
                                 {/* Decorative Glow - Uses CSS Variable */}
                                 <div className="absolute top-0 right-0 -mt-6 -mr-6 h-32 w-32 rounded-full bg-primary/5 blur-3xl group-hover:bg-primary/15 transition-all duration-500" />
@@ -65,7 +65,7 @@ export default async function SocialsPage() {
                                     </div>
 
                                     {/* Action Icon */}
-                                    <div className="p-2 rounded-full bg-background border border-main opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
+                                    <div className="p-2 rounded-full backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-x-2 group-hover:translate-x-0">
                                         <ArrowUpRight className="w-4 h-4 text-primary" />
                                     </div>
                                 </div>

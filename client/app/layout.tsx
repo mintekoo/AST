@@ -75,6 +75,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -84,6 +88,7 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning className={cn("font-sans", inter.variable, geistHeading.variable)}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
+        suppressHydrationWarning
       >
         <ThemeProvider
           attribute="class"

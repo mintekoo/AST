@@ -44,6 +44,7 @@ export default function HeroProductsCarousel({ products, currentSlide }: Carouse
       <div
         ref={imageRef}
         className="
+        relative
         w-full h-full
         fade-zoom
         transition-all duration-600

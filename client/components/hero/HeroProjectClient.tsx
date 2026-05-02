@@ -2,7 +2,7 @@
 "use client";
 
 import HeroAnimatedLayout from "./HeroAnimatedLayout";
-import HeroProductsCarousel from "./HeroProductsCarousel";
+import HeroMediaCarousel from "./HeroMediaCarousel";
 import type { Project } from "@/lib/types";
 
 export default function HeroProjectClient({
@@ -10,7 +10,6 @@ export default function HeroProjectClient({
 }: {
   products?: Project[];
 }) {
-
   return (
     <HeroAnimatedLayout
       totalItems={products.length}
@@ -19,8 +18,8 @@ export default function HeroProjectClient({
         size: "compact",
       }}
       renderMedia={(index) => (
-        <HeroProductsCarousel
-          products={products}
+        <HeroMediaCarousel
+          items={products}
           currentSlide={index}
         />
       )}

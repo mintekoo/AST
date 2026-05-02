@@ -13,22 +13,23 @@ import { fetchAbouts, fetchServices, fetchBlogs, fetchPartners, fetchTestimonial
 import type { Blog, Service, About, Testimonial, Partner, Project } from "@/lib/types";
 import Hero from "@/components/sections/Hero";
 
-export const metadata = {
-  title: "Abyssinia Software Technology PLC",
-  description:
-    "Abyssinia Software Technology PLC delivers innovative custom software solutions, including web and mobile applications, designed for scalability, performance, and business growth.",
+import { siteInfo } from "@/lib/site";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: `${siteInfo.name} | Top Software Company in Ethiopia`,
+  description: siteInfo.description,
 
   openGraph: {
-    title: "Abyssinia Software Technology PLC",
-    description:
-      "Transform your ideas into powerful digital products with Abyssinia Software Technology PLC. متخصص in modern web and mobile solutions.",
-    siteName: "Abyssinia Software",
+    title: siteInfo.name,
+    description: siteInfo.description,
+    siteName: siteInfo.shortName,
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "Abyssinia Software Technology",
+        alt: siteInfo.name,
       },
     ],
     locale: "en_US",
@@ -37,9 +38,8 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title: "Abyssinia Software Technology PLC",
-    description:
-      "Custom software, web & mobile solutions built for performance, security, and scale.",
+    title: siteInfo.name,
+    description: siteInfo.description,
     images: ["/og-image.png"],
   },
 
@@ -49,16 +49,13 @@ export const metadata = {
   },
 
   keywords: [
-    "software development",
-    "custom software",
-    "web development",
-    "mobile app development",
-    "Ethiopia software company",
-    "Abyssinia Software",
-    "digital solutions",
-    "tech company Ethiopia",
+    ...siteInfo.baseKeywords,
+    ...siteInfo.seoBoostKeywords,
   ],
 };
+
+
+import Script from "next/script";
 
 export default async function Home() {
   const [
@@ -84,8 +81,29 @@ export default async function Home() {
   const partners: Partner[] = partnersResp?.data ?? [];
   const testimonials: Testimonial[] = testimonialsResp?.data ?? [];
 
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": siteInfo.name,
+    "url": siteInfo.baseUrl,
+    "logo": `${siteInfo.baseUrl}/logo.png`,
+    "description": siteInfo.description,
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": siteInfo.phone,
+      "contactType": "customer service"
+    }
+  };
+
   return (
     <main className="backdrop-blur-sm text-foreground">
+      <Script
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(organizationSchema),
+        }}
+      />
       <Hero />
       <ProjectsSection projects={projects} />
       <BlogSection blogs={recentBlogs} />

@@ -18,10 +18,12 @@ export default function VerticalDualCarousel({
                 {children}
             </VerticalCarousel>
 
-            {/* Column B – scroll DOWN */}
-            <VerticalCarousel speed={speed} reverse={true}>
-                {children}
-            </VerticalCarousel>
+            {/* Column B – scroll DOWN (hidden on mobile) */}
+            <div className="hidden lg:block">
+                <VerticalCarousel speed={speed} reverse={true}>
+                    {children}
+                </VerticalCarousel>
+            </div>
 
         </div>
     );

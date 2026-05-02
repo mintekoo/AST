@@ -7,6 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import Pagination from "@/components/ui/Pagination";
 import Hero from "@/components/hero/Hero";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Our Services | Software & App Development Ethiopia",
+  description: "We offer comprehensive IT solutions including ERP systems, school management, custom web development, and mobile apps.",
+};
 
 function getPageParam(sp: { [key: string]: string | string[] | undefined }, key: string) {
     const raw = sp?.[key];
@@ -42,7 +48,7 @@ export default async function ServicesPage(props: {
                             <Link
                                 href={`/services/${s.id}`}
                                 key={s.id}
-                                className="flex flex-col group rounded-[var(--radius)] border border-border bg-card text-card-foreground shadow-sm transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-primary/50 overflow-hidden"
+                                className="group flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/30 border border-white/20 dark:border-white/10 shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-xl"
                             >
                                 {/* Image Container */}
                                 <div className="relative aspect-video overflow-hidden">
@@ -58,11 +64,11 @@ export default async function ServicesPage(props: {
                                 </div>
 
                                 {/* Content */}
-                                <div className="flex flex-col flex-1 p-6">
-                                    <h3 className="text-xl font-bold leading-tight group-hover:text-primary transition-colors">
+                                <div className="flex flex-col flex-1 p-6 space-y-3">
+                                    <h3 className="text-xl font-bold leading-tight text-foreground group-hover:text-primary transition-colors">
                                         {s.title}
                                     </h3>
-                                    <p className="mt-3 line-clamp-3 text-sm text-muted-foreground leading-relaxed">
+                                    <p className="mt-3 line-clamp-3 text-sm text-muted-foreground leading-relaxed flex-1">
                                         {s.content}
                                     </p>
                                     

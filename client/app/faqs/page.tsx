@@ -15,7 +15,7 @@ export default async function FAQPage(props: {
     const meta = resp?.meta;
 
     return (
-        <main className="bg-background text-foreground dark:bg-backgroundDark dark:text-foregroundDark">
+        <main className="text-foreground">
             <Container className="py-12 sm:py-16 lg:py-20">
                 <Hero
                     variant="simple"
@@ -29,7 +29,7 @@ export default async function FAQPage(props: {
                     {data.map((f: FAQ) => (
                         <details
                             key={f.id}
-                            className="group rounded-xl border border-border bg-card-background dark:bg-card-background-dark p-4"
+                            className="group rounded-xl border border-white/20 dark:border-white/10 backdrop-blur-xl bg-white/40 dark:bg-black/30 p-4 shadow-sm"
                         >
                             <summary className="cursor-pointer font-medium text-foreground dark:text-foreground-dark">
                                 {f.question}

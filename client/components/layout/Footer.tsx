@@ -30,9 +30,9 @@ export default async function Footer() {
   const primaryLocation = locations[0];
 
   const productLinks = [
-    { name: "Products", href: "/cars" },
-    { name: "Services", href: "/services" },
     { name: "Projects", href: "/projects" },
+    { name: "Services", href: "/services" },
+    { name: "Categories", href: "/categories" },
     { name: "Terms & Conditions", href: "/terms" },
     { name: "FAQs", href: "/faqs" },
     { name: "Social Media", href: "/socials" },
@@ -82,7 +82,7 @@ export default async function Footer() {
               </span>
             </Link>
 
-            <p className="text-sm text-footer-muted leading-relaxed">
+            <p className="text-sm text-muted-foreground leading-relaxed">
               Building scalable, high-performance software systems for enterprise and government institutions across Ethiopia and beyond.
             </p>
           </div>
@@ -97,7 +97,7 @@ export default async function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-sm text-footer-muted hover:text-primary transition"
+                    className="text-sm text-muted-foreground hover:text-primary transition"
                   >
                     {l.name}
                   </Link>
@@ -116,7 +116,7 @@ export default async function Footer() {
                 <li key={l.href}>
                   <Link
                     href={l.href}
-                    className="text-sm text-footer-muted hover:text-primary transition"
+                    className="text-sm text-muted-foreground hover:text-primary transition"
                   >
                     {l.name}
                   </Link>
@@ -131,7 +131,7 @@ export default async function Footer() {
               Contact
             </h3>
 
-            <div className="space-y-4 text-sm text-footer-muted">
+            <div className="space-y-4 text-sm text-muted-foreground">
 
               {primaryLocation?.name && (
                 <div className="flex gap-3">
@@ -183,7 +183,7 @@ export default async function Footer() {
 
           {/* Status */}
           <div className="text-center md:text-right space-y-1">
-            <p className="text-xs text-footer-muted">
+            <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} Abyssinia Software PLC
             </p>
 
